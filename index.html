@@ -3515,11 +3515,11 @@
 
         function openModal() {
           modal.classList.add("open");
-          document.body.style.overflow = "hidden";
+          document.body.style.overflowY = "hidden";
         }
         function closeModal() {
           modal.classList.remove("open");
-          document.body.style.overflow = "";
+          document.body.style.overflowY = "";
         }
 
         document
@@ -3571,13 +3571,13 @@
             burger.classList.add("open");
             burger.setAttribute("aria-expanded", "true");
             mobileNav.classList.add("open");
-            document.body.style.overflow = "hidden";
+            document.body.style.overflowY = "hidden";
           }
           function closeMenu() {
             burger.classList.remove("open");
             burger.setAttribute("aria-expanded", "false");
             mobileNav.classList.remove("open");
-            document.body.style.overflow = "";
+            document.body.style.overflowY = "";
           }
 
           burger.addEventListener("click", () => {
@@ -3679,54 +3679,78 @@
         const expInfo = document.getElementById("expStickInfo");
         const expDots = document.querySelectorAll(".exp-dot");
 
+        /* ── EXP STICKY: sin parpadeo ────────────────────
+   Solo anima cuando el job CAMBIA de verdad.
+   rAF throttle → máximo 1 cálculo por frame.      */
+        let _expActiveIdx = -1;
+        let _expAnimTimer = null;
+
         function updateExpInfo(job, idx) {
-          if (!expInfo) return;
+          if (!expInfo || idx === _expActiveIdx) return; // sin cambio → sin animación
+          _expActiveIdx = idx;
+          if (_expAnimTimer) clearTimeout(_expAnimTimer); // cancela fade anterior
           expInfo.classList.add("changing");
-          setTimeout(() => {
+          _expAnimTimer = setTimeout(() => {
             if (expStickCo) expStickCo.textContent = job.dataset.co;
             if (expStickRl) expStickRl.textContent = job.dataset.role;
             if (expStickPd) expStickPd.textContent = job.dataset.period;
             expDots.forEach((d, i) => d.classList.toggle("active", i === idx));
             expInfo.classList.remove("changing");
-          }, 220);
+            _expAnimTimer = null;
+          }, 200);
         }
 
-        /* Banda central: dispara cuando el job cruza el 30%-70% del viewport */
-        const expIo = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                const idx = Array.from(expJobs).indexOf(e.target);
-                updateExpInfo(e.target, idx);
-                e.target.classList.add("in-view");
-              } else {
-                e.target.classList.remove("in-view");
-              }
-            });
-          },
-          { threshold: 0, rootMargin: "-30% 0px -30% 0px" },
-        );
-
-        /* Fallback scroll para asegurar que siempre hay un job activo */
-        function syncExpOnScroll() {
+        /* Calcula cuál job está más centrado en pantalla */
+        function _pickBestJob() {
+          const mid = window.innerHeight / 2;
           let best = null,
             bestDist = Infinity;
-          const mid = window.innerHeight / 2;
-          expJobs.forEach((j, idx) => {
+          expJobs.forEach((j, i) => {
             const r = j.getBoundingClientRect();
-            const jMid = (r.top + r.bottom) / 2;
-            const dist = Math.abs(jMid - mid);
+            const dist = Math.abs((r.top + r.bottom) / 2 - mid);
             if (dist < bestDist) {
               bestDist = dist;
-              best = { j, idx };
+              best = { j, i };
             }
           });
-          if (best) updateExpInfo(best.j, best.idx);
+          return best;
         }
-        window.addEventListener("scroll", syncExpOnScroll, { passive: true });
-        syncExpOnScroll();
+
+        /* Scroll handler — throttled con rAF */
+        let _expRafPending = false;
+        function _expOnScroll() {
+          if (_expRafPending) return;
+          _expRafPending = true;
+          requestAnimationFrame(() => {
+            _expRafPending = false;
+            const b = _pickBestJob();
+            if (b) updateExpInfo(b.j, b.i);
+          });
+        }
+        window.addEventListener("scroll", _expOnScroll, { passive: true });
+
+        /* Observer solo para clase in-view (reveal animation) */
+        const expIo = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) =>
+              e.target.classList.toggle("in-view", e.isIntersecting),
+            );
+          },
+          { threshold: 0.1 },
+        );
 
         expJobs.forEach((j) => expIo.observe(j));
+
+        /* Inicializa sin animación (evita flash en primer load) */
+        (function () {
+          const b = _pickBestJob();
+          if (!b || !expInfo) return;
+          _expActiveIdx = b.i;
+          if (expStickCo) expStickCo.textContent = b.j.dataset.co;
+          if (expStickRl) expStickRl.textContent = b.j.dataset.role;
+          if (expStickPd) expStickPd.textContent = b.j.dataset.period;
+          expDots.forEach((d, i) => d.classList.toggle("active", i === b.i));
+        })();
 
         /* ── FLOATING HERO SHAPES PARALLAX ──────────── */
         const hShapes = document.querySelectorAll(".h-shape");
