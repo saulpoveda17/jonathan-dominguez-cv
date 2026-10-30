@@ -63,8 +63,7 @@
         line-height: 1.65;
         color: var(--ink);
         background: var(--white);
-        overflow-x: hidden;
-        overflow-x: hidden;
+        overflow-x: clip;
         cursor: none;
       }
 
@@ -3692,6 +3691,7 @@
           }, 220);
         }
 
+        /* Banda central: dispara cuando el job cruza el 30%-70% del viewport */
         const expIo = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
@@ -3704,8 +3704,27 @@
               }
             });
           },
-          { threshold: 0.45, rootMargin: "0px 0px -10% 0px" },
+          { threshold: 0, rootMargin: "-30% 0px -30% 0px" },
         );
+
+        /* Fallback scroll para asegurar que siempre hay un job activo */
+        function syncExpOnScroll() {
+          let best = null,
+            bestDist = Infinity;
+          const mid = window.innerHeight / 2;
+          expJobs.forEach((j, idx) => {
+            const r = j.getBoundingClientRect();
+            const jMid = (r.top + r.bottom) / 2;
+            const dist = Math.abs(jMid - mid);
+            if (dist < bestDist) {
+              bestDist = dist;
+              best = { j, idx };
+            }
+          });
+          if (best) updateExpInfo(best.j, best.idx);
+        }
+        window.addEventListener("scroll", syncExpOnScroll, { passive: true });
+        syncExpOnScroll();
 
         expJobs.forEach((j) => expIo.observe(j));
 
