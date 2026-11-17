@@ -1122,27 +1122,23 @@
 
       /* ── Mobile ── */
       @media(max-width:768px){
-        /* Snap scroll: una vitrina por pantalla */
+        /* Una vitrina por pantalla — touch-driven (sin scroll container anidado) */
         .vniches{
-          display:block;
+          display:flex;
+          flex-direction:column;
           height:100vh;
-          height:100svh;
-          overflow-y:scroll;
-          scroll-snap-type:y mandatory;
-          -webkit-overflow-scrolling:touch;
-          scrollbar-width:none;
-          overscroll-behavior-y:none;
+          overflow:hidden;
+          touch-action:none;
+          transition:transform .5s cubic-bezier(.22,1,.36,1);
+          will-change:transform;
         }
-        .vniches::-webkit-scrollbar{display:none}
         .vniche{
           flex:none!important;
           height:100vh;
-          height:100svh;
-          scroll-snap-align:start;
           border-right:none!important;
           border-bottom:none!important;
         }
-        /* Ocultar hint en móvil (los dots cumplen la función) */
+        /* Ocultar hint en móvil */
         .vniches-hint{display:none}
         /* Dots indicadores — fijos a la derecha del viewport */
         .vniches-mob-dots{
@@ -3792,47 +3788,80 @@
           if (detail) detail.style.display = "none";
         })();
 
-        /* ── MOBILE SNAP DOTS — vitrinas ───────────────── */
+        /* ── MOBILE VNICHE TOUCH CONTROL ─── */
         (function () {
           const isMob = () => window.innerWidth <= 768;
-          const vnichesCon = document.querySelector(".vniches");
+          const con = document.querySelector(".vniches");
+          const niches = document.querySelectorAll(".vniche");
           const mobDots = document.querySelector(".vniches-mob-dots");
           const dotSpans = mobDots ? mobDots.querySelectorAll("span") : [];
-          const vtabsSec = document.querySelector(".vtabs");
+          const vtabs = document.querySelector(".vtabs");
+          if (!con || !niches.length) return;
 
-          if (!vnichesCon || !mobDots || !vtabsSec) return;
+          let curr = 0;
+          const N = niches.length;
 
-          function setDot(idx) {
-            dotSpans.forEach((s, i) => s.classList.toggle("on", i === idx));
+          function setDot(i) {
+            dotSpans.forEach((s, j) => s.classList.toggle("on", i === j));
           }
 
-          /* Show/hide dots when vtabs section enters/leaves viewport */
-          const secObs = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((e) => {
-                if (isMob()) mobDots.classList.toggle("vis", e.isIntersecting);
-              });
-            },
-            { threshold: 0.15 },
-          );
-          secObs.observe(vtabsSec);
+          function goTo(i) {
+            curr = Math.max(0, Math.min(N - 1, i));
+            con.style.transform = `translateY(calc(${-curr} * 100vh))`;
+            setDot(curr);
+          }
 
-          /* Update active dot on inner scroll */
-          const nicheObs = new IntersectionObserver(
-            (entries) => {
+          /* Show / hide dots when vtabs enters viewport */
+          if (vtabs && mobDots) {
+            new IntersectionObserver(
+              (entries) => {
+                entries.forEach((e) => {
+                  if (isMob())
+                    mobDots.classList.toggle("vis", e.isIntersecting);
+                });
+              },
+              { threshold: 0.15 },
+            ).observe(vtabs);
+          }
+
+          /* Touch gesture — swipe advances niche; at boundary, page scrolls */
+          let sy = 0,
+            sx = 0;
+          con.addEventListener(
+            "touchstart",
+            (e) => {
               if (!isMob()) return;
-              entries.forEach((e) => {
-                if (e.isIntersecting && e.intersectionRatio >= 0.5) {
-                  setDot(parseInt(e.target.dataset.niche));
-                }
-              });
+              sy = e.touches[0].clientY;
+              sx = e.touches[0].clientX;
             },
-            { root: vnichesCon, threshold: 0.5 },
+            { passive: true },
           );
 
-          document
-            .querySelectorAll(".vniche")
-            .forEach((n) => nicheObs.observe(n));
+          con.addEventListener(
+            "touchend",
+            (e) => {
+              if (!isMob()) return;
+              const dy = sy - e.changedTouches[0].clientY;
+              const dx = sx - e.changedTouches[0].clientX;
+              if (Math.abs(dx) > Math.abs(dy) || Math.abs(dy) < 40) return;
+              if (dy > 0) {
+                if (curr < N - 1) goTo(curr + 1);
+                else
+                  window.scrollBy({
+                    top: window.innerHeight * 0.6,
+                    behavior: "smooth",
+                  });
+              } else {
+                if (curr > 0) goTo(curr - 1);
+                else
+                  window.scrollBy({
+                    top: -window.innerHeight * 0.6,
+                    behavior: "smooth",
+                  });
+              }
+            },
+            { passive: true },
+          );
         })();
 
         /* ── STICKY EXPERIENCE SECTION ───────────────── */
