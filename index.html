@@ -1122,13 +1122,18 @@
 
       /* ── Mobile ── */
       @media(max-width:768px){
-        /* Una vitrina por pantalla — touch-driven (sin scroll container anidado) */
+        /* Una vitrina por pantalla — ventana fija + track interno deslizante */
         .vniches{
-          display:flex;
-          flex-direction:column;
+          display:block;
           height:100vh;
           overflow:hidden;
           touch-action:none;
+        }
+        /* Track generado por JS (.vn-track) lleva la transición */
+        .vn-track{
+          display:flex;
+          flex-direction:column;
+          width:100%;
           transition:transform .5s cubic-bezier(.22,1,.36,1);
           will-change:transform;
         }
@@ -3792,11 +3797,24 @@
         (function () {
           const isMob = () => window.innerWidth <= 768;
           const con = document.querySelector(".vniches");
-          const niches = document.querySelectorAll(".vniche");
+          const niches = Array.from(document.querySelectorAll(".vniche"));
           const mobDots = document.querySelector(".vniches-mob-dots");
-          const dotSpans = mobDots ? mobDots.querySelectorAll("span") : [];
+          const dotSpans = mobDots
+            ? Array.from(mobDots.querySelectorAll("span"))
+            : [];
           const vtabs = document.querySelector(".vtabs");
           if (!con || !niches.length) return;
+
+          /* Crear track interno solo en móvil (ventana fija + track deslizante) */
+          let track = null;
+          function buildTrack() {
+            if (!isMob() || con.querySelector(".vn-track")) return;
+            track = document.createElement("div");
+            track.className = "vn-track";
+            niches.forEach((n) => track.appendChild(n));
+            con.appendChild(track);
+          }
+          buildTrack();
 
           let curr = 0;
           const N = niches.length;
@@ -3807,11 +3825,12 @@
 
           function goTo(i) {
             curr = Math.max(0, Math.min(N - 1, i));
-            con.style.transform = `translateY(calc(${-curr} * 100vh))`;
+            if (track)
+              track.style.transform = `translateY(calc(${-curr} * 100vh))`;
             setDot(curr);
           }
 
-          /* Show / hide dots when vtabs enters viewport */
+          /* Dots: visibles cuando vtabs está en pantalla */
           if (vtabs && mobDots) {
             new IntersectionObserver(
               (entries) => {
@@ -3824,13 +3843,14 @@
             ).observe(vtabs);
           }
 
-          /* Touch gesture — swipe advances niche; at boundary, page scrolls */
+          /* Gestos táctiles */
           let sy = 0,
             sx = 0;
           con.addEventListener(
             "touchstart",
             (e) => {
               if (!isMob()) return;
+              if (!track) buildTrack();
               sy = e.touches[0].clientY;
               sx = e.touches[0].clientX;
             },
@@ -3840,7 +3860,7 @@
           con.addEventListener(
             "touchend",
             (e) => {
-              if (!isMob()) return;
+              if (!isMob() || !track) return;
               const dy = sy - e.changedTouches[0].clientY;
               const dx = sx - e.changedTouches[0].clientX;
               if (Math.abs(dx) > Math.abs(dy) || Math.abs(dy) < 40) return;
