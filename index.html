@@ -1122,17 +1122,64 @@
 
       /* ── Mobile ── */
       @media(max-width:768px){
-        .vniches{flex-direction:column;height:auto}
-        .vniche{flex:none!important;height:220px;border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
-        .vniche:last-child{border-bottom:none}
+        /* Snap scroll: una vitrina por pantalla */
+        .vniches{
+          display:block;
+          height:100vh;
+          height:100svh;
+          overflow-y:scroll;
+          scroll-snap-type:y mandatory;
+          -webkit-overflow-scrolling:touch;
+          scrollbar-width:none;
+          overscroll-behavior-y:none;
+        }
+        .vniches::-webkit-scrollbar{display:none}
+        .vniche{
+          flex:none!important;
+          height:100vh;
+          height:100svh;
+          scroll-snap-align:start;
+          border-right:none!important;
+          border-bottom:none!important;
+        }
+        /* Ocultar hint en móvil (los dots cumplen la función) */
+        .vniches-hint{display:none}
+        /* Dots indicadores — fijos a la derecha del viewport */
+        .vniches-mob-dots{
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          gap:9px;
+          position:fixed;
+          right:18px;
+          top:50%;
+          transform:translateY(-50%);
+          z-index:9000;
+          pointer-events:none;
+          opacity:0;
+          transition:opacity .35s;
+        }
+        .vniches-mob-dots.vis{opacity:1}
+        .vniches-mob-dots span{
+          display:block;
+          width:7px;height:7px;
+          border-radius:50%;
+          background:rgba(255,255,255,.35);
+          transition:background .3s,transform .3s;
+        }
+        .vniches-mob-dots span.on{
+          background:#fff;
+          transform:scale(1.45);
+        }
         .vtabs-head{padding:60px 24px 44px}
-        .vniches-hint{padding:16px 24px 44px}
 
         .vdetail{grid-template-columns:1fr;grid-template-rows:auto 1fr}
         .vdl{padding:56px 28px 32px;border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
         .vdl-desc{margin-bottom:32px}
         .vdl-title{font-size:2.4rem}
       }
+      /* Dots ocultos en desktop */
+      .vniches-mob-dots{display:none}
 
       /* ════════════════════════════════════════════════
          EXPERIENCIA — STICKY LEFT IMAGE
@@ -2735,6 +2782,13 @@
       </div>
       <!-- /vniches -->
 
+      <!-- Dots indicadores móvil -->
+      <div class="vniches-mob-dots" aria-hidden="true">
+        <span class="on"></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <p class="vniches-hint">· Pulsa para explorar · ESC para cerrar ·</p>
     </section>
 
@@ -3736,6 +3790,49 @@
 
           /* Initially hidden */
           if (detail) detail.style.display = "none";
+        })();
+
+        /* ── MOBILE SNAP DOTS — vitrinas ───────────────── */
+        (function () {
+          const isMob = () => window.innerWidth <= 768;
+          const vnichesCon = document.querySelector(".vniches");
+          const mobDots = document.querySelector(".vniches-mob-dots");
+          const dotSpans = mobDots ? mobDots.querySelectorAll("span") : [];
+          const vtabsSec = document.querySelector(".vtabs");
+
+          if (!vnichesCon || !mobDots || !vtabsSec) return;
+
+          function setDot(idx) {
+            dotSpans.forEach((s, i) => s.classList.toggle("on", i === idx));
+          }
+
+          /* Show/hide dots when vtabs section enters/leaves viewport */
+          const secObs = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (isMob()) mobDots.classList.toggle("vis", e.isIntersecting);
+              });
+            },
+            { threshold: 0.15 },
+          );
+          secObs.observe(vtabsSec);
+
+          /* Update active dot on inner scroll */
+          const nicheObs = new IntersectionObserver(
+            (entries) => {
+              if (!isMob()) return;
+              entries.forEach((e) => {
+                if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+                  setDot(parseInt(e.target.dataset.niche));
+                }
+              });
+            },
+            { root: vnichesCon, threshold: 0.5 },
+          );
+
+          document
+            .querySelectorAll(".vniche")
+            .forEach((n) => nicheObs.observe(n));
         })();
 
         /* ── STICKY EXPERIENCE SECTION ───────────────── */
