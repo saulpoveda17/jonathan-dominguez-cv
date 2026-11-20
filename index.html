@@ -2449,6 +2449,7 @@
       .vniche:hover{flex:none;border-color:var(--blue);box-shadow:0 10px 30px var(--blue-a100)}
       .vniche::after{display:none}
       .vniche-img-wrap{position:static;transform:none !important;width:100%}
+      .vniche-img{height:auto;aspect-ratio:4/3;border-radius:var(--r);border:1px solid var(--border)}
       .vniche-ph{aspect-ratio:4/3;background:var(--off);border:1px dashed var(--border);border-radius:var(--r);color:var(--blue)}
       .vniche-ph svg{opacity:.55}
       .vniche-ph-lbl{color:var(--ink-d);font-size:.8rem}
@@ -2989,19 +2990,7 @@
           aria-label="Vídeo: Personas, gestión de equipos"
         >
           <div class="vniche-img-wrap">
-            <!-- Pon aquí la portada real del vídeo cuando la tengas -->
-            <div class="vniche-ph" aria-hidden="true">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-              </svg>
-              <span class="vniche-ph-lbl">Portada<br />próximamente</span>
-            </div>
+            <img class="vniche-img" src="portadas/personas.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
           </div>
           <div class="vniche-meta">
             <strong>Personas</strong>
@@ -3018,18 +3007,7 @@
           aria-label="Vídeo: Negocios, estrategia comercial"
         >
           <div class="vniche-img-wrap">
-            <div class="vniche-ph" aria-hidden="true">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M8 12h8M8 8h5M8 16h3" />
-              </svg>
-              <span class="vniche-ph-lbl">Portada<br />próximamente</span>
-            </div>
+            <img class="vniche-img" src="portadas/dia-a-dia.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
           </div>
           <div class="vniche-meta">
             <strong>El Día a Día</strong>
@@ -3046,18 +3024,7 @@
           aria-label="Vídeo: Resultados, métricas reales"
         >
           <div class="vniche-img-wrap">
-            <div class="vniche-ph" aria-hidden="true">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1"
-              >
-                <polyline points="4 17 9 12 13 15 19 8" />
-                <path d="M20 8h-4v4" />
-              </svg>
-              <span class="vniche-ph-lbl">Portada<br />próximamente</span>
-            </div>
+            <img class="vniche-img" src="portadas/resultados.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
           </div>
           <div class="vniche-meta">
             <strong>Resultados</strong>
