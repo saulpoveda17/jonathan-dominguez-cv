@@ -1,0 +1,26 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "restyle",
+  "scope": "page",
+  "shape": "kept",
+  "theme": "ink",
+  "axes": "light/grotesk-sans/chromatic-teal",
+  "hero": "kept split",
+  "nav": "kept edge-aligned",
+  "footer": "kept one line",
+  "imagery": "photographs",
+  "photos": [
+   "foto-perfil.png",
+   "foto-trabajo.png"
+  ],
+  "signature": "availability in teal",
+  "waived": [
+   "22",
+   "39b",
+   "49b"
+  ],
+  "prompt": "personal CV page for a retail area manager",
+  "date": "2026-11-20"
+ }
+]
