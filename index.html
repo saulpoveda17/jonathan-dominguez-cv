@@ -1982,7 +1982,9 @@
         border-radius:var(--r);
         display:inline-block;
         line-height:0;
+        transition:transform .3s var(--ease),box-shadow .3s var(--ease);
       }
+      .qr-box:hover{transform:scale(1.04);box-shadow:0 12px 32px var(--black-a500)}
       .qr-label{
         font-family:var(--ff-m);
         font-size:.8rem;
@@ -2694,11 +2696,11 @@
           <a href="#trayectoria" class="btn btn-solid">Ver trayectoria</a>
           <a href="#contacto" class="btn btn-line">Hablamos</a>
           <a
-            href="https://www.linkedin.com/in/"
+            href="https://www.linkedin.com/in/jonathan-dom%C3%ADnguez-d%C3%ADaz/"
             target="_blank"
             rel="noopener"
             class="btn btn-line"
-            aria-label="LinkedIn"
+            aria-label="LinkedIn (se abre en una pestaña nueva)"
           >
             <svg
               viewBox="0 0 24 24"
@@ -3579,7 +3581,7 @@
           jonathan.dominguezdiaz@gmail.com
         </a>
         <a
-          href="https://www.linkedin.com/in/"
+          href="https://www.linkedin.com/in/jonathan-dom%C3%ADnguez-d%C3%ADaz/"
           target="_blank"
           rel="noopener"
           class="chip"
@@ -3615,8 +3617,15 @@
       </div>
       <!-- QR code -->
       <div class="qr-wrap fu d4">
-        <div class="qr-box"><div id="qrCode"></div></div>
-        <p class="qr-label">Escanea para abrir este CV online</p>
+        <a
+          class="qr-box"
+          href="cv-jonathan-dominguez.pdf"
+          target="_blank"
+          rel="noopener"
+          aria-label="Descargar CV en PDF"
+          ><div id="qrCode"></div
+        ></a>
+        <p class="qr-label">Escanea o pulsa para descargar mi CV en PDF</p>
       </div>
     </section>
 
@@ -4107,7 +4116,7 @@
         const qrEl = document.getElementById("qrCode");
         if (qrEl && typeof QRCode !== "undefined") {
           new QRCode(qrEl, {
-            text: "http://saulpoveda.com/jonathan-dominguez-cv/",
+            text: "https://saulpoveda.com/jonathan-dominguez-cv/cv-jonathan-dominguez.pdf",
             width: 120,
             height: 120,
             colorDark: "#1a4fb8",
