@@ -2449,7 +2449,27 @@
       .vniche:hover{flex:none;border-color:var(--blue);box-shadow:0 10px 30px var(--blue-a100)}
       .vniche::after{display:none}
       .vniche-img-wrap{position:static;transform:none !important;width:100%}
-      .vniche-img{height:auto;aspect-ratio:4/3;border-radius:var(--r);border:1px solid var(--border)}
+      .vniche-img{height:auto;aspect-ratio:4/3;border-radius:0;border:0;transition:transform .8s var(--ease)}
+      /* Portada: marco con zoom, brillo y etiqueta "Ver vídeo" */
+      .vniche-img-wrap{position:relative;top:auto;left:auto;overflow:hidden;border-radius:var(--r);border:1px solid var(--border);isolation:isolate}
+      .vniche-img-wrap::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+        background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);
+        transform:translateX(-120%);transition:transform 0s}
+      .vniche:hover .vniche-img-wrap::after,.vniche:focus-visible .vniche-img-wrap::after{transform:translateX(120%);transition:transform 1s var(--ease)}
+      html:not(.cine) .vniche:hover .vniche-img{transform:scale(1.05)}
+      .vniche-play{position:absolute;left:14px;bottom:14px;z-index:2;display:inline-flex;align-items:center;gap:8px;
+        padding:8px 14px 8px 10px;border-radius:var(--r-pill);background:var(--white);color:var(--blue);
+        font:600 .8rem/1 var(--ff-b);box-shadow:0 8px 24px rgba(7,20,38,.35);
+        opacity:0;transform:translateY(12px);transition:opacity .35s var(--ease),transform .45s var(--ease)}
+      .vniche-play svg{width:18px;height:18px;padding:4px;border-radius:50%;background:var(--blue);fill:var(--white);box-sizing:content-box}
+      .vniche:hover .vniche-play,.vniche:focus-visible .vniche-play{opacity:1;transform:none}
+      @media (hover:none){.vniche-play{opacity:1;transform:none}}
+      .vniche-meta strong{transition:color .25s var(--ease)}
+      .vniche:hover .vniche-meta strong{color:var(--blue)}
+      @media (prefers-reduced-motion:reduce){
+        .vniche-img,.vniche-play,.vniche-img-wrap::after{transition:none !important}
+        .vniche-img-wrap::after{display:none}
+      }
       .vniche-ph{aspect-ratio:4/3;background:var(--off);border:1px dashed var(--border);border-radius:var(--r);color:var(--blue)}
       .vniche-ph svg{opacity:.55}
       .vniche-ph-lbl{color:var(--ink-d);font-size:.8rem}
@@ -3015,6 +3035,7 @@
         >
           <div class="vniche-img-wrap">
             <img class="vniche-img" src="portadas/personas.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
+            <span class="vniche-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver vídeo</span>
           </div>
           <div class="vniche-meta">
             <strong>Personas</strong>
@@ -3032,6 +3053,7 @@
         >
           <div class="vniche-img-wrap">
             <img class="vniche-img" src="portadas/dia-a-dia.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
+            <span class="vniche-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver vídeo</span>
           </div>
           <div class="vniche-meta">
             <strong>El Día a Día</strong>
@@ -3049,6 +3071,7 @@
         >
           <div class="vniche-img-wrap">
             <img class="vniche-img" src="portadas/resultados.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" />
+            <span class="vniche-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver vídeo</span>
           </div>
           <div class="vniche-meta">
             <strong>Resultados</strong>
@@ -4310,9 +4333,37 @@
         rise(".qr-wrap", { y: 40 });
         rise(".hist-close > :not(.hist-close-bar)", { y: 40 });
 
-        /* Vitrinas: la portada se descubre de abajo arriba */
-        $$(".vniche-ph").forEach((ph) => {
-          gsap.from(ph, { clipPath: "inset(100% 0% 0% 0%)", duration: 1.4, ease: "power4.inOut", scrollTrigger: { trigger: ph, start: "top 88%", once: true } });
+        /* Vitrinas: la portada se descubre, la foto se asienta y el texto entra */
+        $$(".vniche").forEach((card, i) => {
+          const wrap = $(".vniche-img-wrap", card);
+          const img = $(".vniche-img", card);
+          const meta = $$(".vniche-meta > *", card);
+          if (!wrap || !img) return;
+          const t = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 88%", once: true }, delay: i * 0.12, defaults: { ease: EASE } });
+          t.from(wrap, { clipPath: "inset(100% 0% 0% 0% round 8px)", duration: 1.4, ease: "power4.inOut" })
+           .fromTo(img, { scale: 1.4 }, { scale: 1.12, duration: 1.8 }, 0.15)
+           .from(meta, { y: 24, opacity: 0, duration: 1, stagger: 0.08 }, 0.6);
+
+          /* Parallax suave de la foto dentro del marco */
+          gsap.fromTo(img, { yPercent: -4 }, {
+            yPercent: 4, ease: "none", immediateRender: false,
+            scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true },
+          });
+
+          /* Ratón: la tarjeta se inclina y la foto se acerca (solo con ratón) */
+          if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+          gsap.set(card, { transformPerspective: 1000 });
+          card.addEventListener("mousemove", (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            gsap.to(card, { rotationY: px * 6, rotationX: -py * 6, y: -6, duration: 0.6, ease: "power3.out", overwrite: "auto" });
+          });
+          card.addEventListener("mouseenter", () => gsap.to(img, { scale: 1.2, duration: 0.9, ease: "power3.out", overwrite: "auto" }));
+          card.addEventListener("mouseleave", () => {
+            gsap.to(card, { rotationY: 0, rotationX: 0, y: 0, duration: 0.9, ease: "elastic.out(1, 0.6)", overwrite: "auto" });
+            gsap.to(img, { scale: 1.12, duration: 0.9, ease: "power3.out", overwrite: "auto" });
+          });
         });
 
         /* ── Competencias: filete que se dibuja y fila que entra ── */
