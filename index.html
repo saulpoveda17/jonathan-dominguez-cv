@@ -2364,9 +2364,25 @@
          como una caja difusa alrededor de la foto. En su lugar, una sombra
          de suelo bajo los pies, dibujada en el fondo de la propia imagen. */
       .h-photo-box img{filter:none}
-      .exp-photo{
+      /* Experiencia: retrato en marco azul, el mismo azul del hero.
+         La foto respira (GSAP escala la imagen) dentro del marco. */
+      .exp-portrait{
+        width:min(100%,calc((100svh - 330px) * .8));
+        aspect-ratio:4/5;
+        margin:0 0 28px;
+        border-radius:var(--r-lg);
+        overflow:hidden;
+        background:radial-gradient(120% 80% at 50% 20%,var(--blue-m),var(--blue) 55%,var(--blue-d));
+      }
+      .exp-portrait .exp-photo{
+        width:100%;
+        height:100%;
+        max-width:none;
+        margin:0;
+        object-fit:cover;
+        object-position:50% 0;
         filter:none;
-        background:radial-gradient(ellipse 46% 2.4% at 50% 98.6%,var(--navy-a220),transparent 100%);
+        transform-origin:50% 30%;
       }
       /* Tableta: el hero se apila y el nav queda sobre el azul */
       @media(min-width:641px) and (max-width:1100px){
@@ -2390,7 +2406,6 @@
         .h-photo-box{height:76%;right:-10%}
         #nav:not(.stuck) .nav-burger:not(.open) span{background:var(--white)}
         .h-name{max-width:9ch}
-        .exp-photo{height:min(48svh,380px)}
       }
 
       /* ══════════════════════════════════════════════════════
@@ -2807,18 +2822,20 @@
         <!-- ─── LEFT: STICKY IMAGE ─── -->
         <div class="exp-sticky-col">
           <div class="exp-sticky-inner">
-            <picture>
-              <source srcset="foto-trabajo-web.webp" type="image/webp" />
-              <img
-                class="exp-photo"
-                src="foto-trabajo-web.png"
-                alt="Jonathan Domínguez Díaz, de pie"
-                width="420"
-                height="1341"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
+            <div class="exp-portrait">
+              <picture>
+                <source srcset="foto-trabajo-retrato.webp" type="image/webp" />
+                <img
+                  class="exp-photo"
+                  src="foto-trabajo-retrato.png"
+                  alt="Jonathan Domínguez Díaz"
+                  width="763"
+                  height="954"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </div>
 
             <div class="exp-stick-info" id="expStickInfo">
               <p class="exp-stick-co" id="expStickCo">
