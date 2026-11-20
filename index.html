@@ -2461,6 +2461,23 @@
       .vdetail.open{clip-path:none;opacity:1}
       .vdr::after{display:none}
 
+      /* Vídeos de YouTube */
+      .vp-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+      .vp-frame .vp-ph{z-index:1;background:linear-gradient(to top,rgba(7,20,38,.85) 0%,rgba(7,20,38,.25) 55%,rgba(7,20,38,.1) 100%);justify-content:flex-end;padding-bottom:32px}
+      .vp-frame .vp-ph:hover{background:linear-gradient(to top,rgba(7,20,38,.9) 0%,rgba(7,20,38,.4) 60%,rgba(7,20,38,.2) 100%)}
+      .vmodal-overlay{z-index:9200}
+      .vmodal{max-width:min(1100px,100%)}
+      .vmodal-media{position:relative;aspect-ratio:16/9;background:#000}
+      .vmodal-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+      .vdr-img-wrap{width:min(82%,640px)}
+      .vdr-ph.has-cover{position:relative;aspect-ratio:4/3;padding:0;border:0;border-radius:var(--r-lg);overflow:hidden;cursor:pointer;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+      .vdr-ph.has-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+      .vdr-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;
+        background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.5);backdrop-filter:blur(6px);
+        display:flex;align-items:center;justify-content:center;transition:transform .3s var(--ease),background .2s}
+      .vdr-ph.has-cover:hover .vdr-play{transform:translate(-50%,-50%) scale(1.08);background:var(--blue-m)}
+      .vdr-play svg{width:30px;height:30px;fill:#fff;margin-left:4px}
+
       /* Etiquetas: un poco más grandes y legibles */
       .h-overtitle,.stats-hd,.vp-label,.exp-sup,.vtabs-hd,.comp-sup,.comp-label,.hist-eyebrow,.hist-era,.form-hd,.form-src,.faq-hd,.contact-lbl{font-size:.85rem;font-weight:500}
 
@@ -2784,6 +2801,13 @@
             tabindex="0"
             aria-label="Reproducir vídeo de presentación"
           >
+            <img
+              class="vp-thumb"
+              src="https://i.ytimg.com/vi/kUbW4CDae2M/maxresdefault.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
             <div class="vp-ph">
               <div class="vp-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -3591,21 +3615,7 @@
         <button class="vmodal-close" id="modalClose" aria-label="Cerrar vídeo">
           ✕
         </button>
-        <!--
-      Cuando el vídeo esté listo, reemplaza .vmodal-ph por:
-      <iframe src="https://www.youtube.com/embed/TU_ID?autoplay=1&rel=0"
-        allow="autoplay; fullscreen" allowfullscreen
-        style="position:absolute;inset:0;width:100%;height:100%;border:none"></iframe>
-    -->
-        <!--
-      Cuando añadas el vídeo, reemplaza el div de abajo por:
-      <iframe id="vmodalIframe" src="" allow="autoplay; fullscreen" allowfullscreen
-        style="position:absolute;inset:0;width:100%;height:100%;border:none"></iframe>
-    -->
-        <div class="vmodal-ph">
-          <strong id="vmodalTitle">Vídeo de presentación</strong>
-          <span>Próximamente · 90 segundos</span>
-        </div>
+        <div class="vmodal-media" id="vmodalMedia"></div>
       </div>
     </div>
 
@@ -3684,18 +3694,33 @@
         const modal = document.getElementById("videoModal");
         const modalClose = document.getElementById("modalClose");
 
-        function openModal() {
+        const modalMedia = document.getElementById("vmodalMedia");
+        const PRESENTATION_ID = "kUbW4CDae2M";
+
+        /* Carga el iframe de YouTube solo al reproducir (sin cookies hasta entonces) */
+        function openModal(id = PRESENTATION_ID, title = "Vídeo de presentación") {
+          if (modalMedia) {
+            modalMedia.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+              title="${title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+          }
+          modal.setAttribute("aria-label", title);
           modal.classList.add("open");
           document.body.style.overflowY = "hidden"; window.__lenis?.stop();
+          modalClose?.focus();
         }
         function closeModal() {
+          if (!modal.classList.contains("open")) return;
           modal.classList.remove("open");
-          document.body.style.overflowY = ""; window.__lenis?.start();
+          if (modalMedia) modalMedia.innerHTML = ""; /* detiene el vídeo */
+          /* Si el panel de detalle sigue abierto, mantenemos el scroll bloqueado */
+          if (!document.getElementById("vdetail")?.classList.contains("open")) {
+            document.body.style.overflowY = ""; window.__lenis?.start();
+          }
         }
 
         document
           .getElementById("vpFrameBtn")
-          ?.addEventListener("click", openModal);
+          ?.addEventListener("click", () => openModal());
         document
           .getElementById("vpFrameBtn")
           ?.addEventListener("keydown", (e) => {
@@ -3708,9 +3733,17 @@
         modal?.addEventListener("click", (e) => {
           if (e.target === modal) closeModal();
         });
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") closeModal();
-        });
+        /* En captura: ESC cierra primero el vídeo y no el panel de detalle */
+        document.addEventListener(
+          "keydown",
+          (e) => {
+            if (e.key === "Escape" && modal.classList.contains("open")) {
+              closeModal();
+              e.stopImmediatePropagation();
+            }
+          },
+          true,
+        );
 
         /* ── HAMBURGER MENU ──────────────────────────── */
         (function () {
@@ -3782,21 +3815,24 @@
               title: "Personas y Liderazgo Cercano",
               sub: "Liderazgo Cercano",
               desc: "Cómo he gestionado equipos de hasta 35 profesionales basándome en la escucha, la confianza y el acompañamiento individual para recuperar la motivación y elevar los resultados.",
-              url: null /* 'https://www.youtube.com/embed/XXXX?autoplay=1&rel=0' */,
+              url: "BSG8bCsBlqo",
+              cover: "portadas/personas.jpg",
             },
             {
               num: "02",
               title: "El Día a Día en las Tiendas",
               sub: "Tiendas y Operaciones",
               desc: "Cómo se coordina sobre el terreno el trabajo de 10 puntos de venta: organización de encargados, excelencia en la atención, venta consultiva y cuidado del visual merchandising.",
-              url: null /* 'https://www.youtube.com/embed/YYYY?autoplay=1&rel=0' */,
+              url: "pFTeQRQL4Z8",
+              cover: "portadas/dia-a-dia.jpg",
             },
             {
               num: "03",
               title: "Cuenta de Resultados y KPIs",
               sub: "Datos y Resultados",
               desc: "Cómo analizo los indicadores de cada tienda (conversión, ticket medio, venta cruzada y control de mermas) para corregir desviaciones a tiempo y sostener más de un 90% de cumplimiento.",
-              url: null /* 'https://www.youtube.com/embed/ZZZZ?autoplay=1&rel=0' */,
+              url: "3wuIIeFZtQw",
+              cover: "portadas/resultados.jpg",
             },
           ];
 
@@ -3846,9 +3882,20 @@
             if (elSoon) elSoon.style.display = d.url ? "none" : "block";
 
             /* Populate right panel with matching icon */
-            if (drPh)
-              drPh.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+            if (drPh) {
+              if (d.url && d.cover) {
+                drPh.classList.add("has-cover");
+                drPh.removeAttribute("aria-hidden");
+                drPh.setAttribute("role", "button");
+                drPh.setAttribute("tabindex", "0");
+                drPh.setAttribute("aria-label", "Reproducir vídeo: " + d.title);
+                drPh.innerHTML = `<img src="${d.cover}" alt="" /><span class="vdr-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
+              } else {
+                drPh.classList.remove("has-cover");
+                drPh.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
             width="44" height="44" style="opacity:.35">${DET_ICONS[idx]}</svg>`;
+              }
+            }
 
             /* Open: force reflow so transition fires */
             detail.style.display = "grid";
@@ -3860,14 +3907,18 @@
             document.body.style.overflowY = "hidden"; window.__lenis?.stop();
 
             /* Play button wires up video modal */
-            if (elPlay && d.url) {
-              elPlay.onclick = () => {
-                const iframe = document.getElementById("vmodalIframe");
-                const titleEl = document.getElementById("vmodalTitle");
-                if (iframe) iframe.src = d.url;
-                if (titleEl) titleEl.textContent = d.title;
-                openModal();
-              };
+            if (d.url) {
+              const play = () => openModal(d.url, d.title);
+              if (elPlay) elPlay.onclick = play;
+              if (drPh) {
+                drPh.onclick = play;
+                drPh.onkeydown = (e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    play();
+                  }
+                };
+              }
             }
           }
 
@@ -3882,6 +3933,7 @@
             }, 680);
             active = -1;
             if (elPlay) elPlay.onclick = null;
+            if (drPh) drPh.onclick = drPh.onkeydown = null;
           }
 
           /* ── Wire niche clicks ── */
