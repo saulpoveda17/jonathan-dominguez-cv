@@ -2803,7 +2803,9 @@
       @media (max-width:900px){
         .lead-band{min-height:auto;padding:96px 24px 0;flex-direction:column;align-items:stretch}
         .lead-band::after{background:linear-gradient(to bottom,var(--navy-1) 0%,rgba(7,20,38,.6) 45%,rgba(7,20,38,0) 70%,rgba(7,20,38,.6) 100%)}
-        .lead-photo-wrap{position:relative;right:auto;width:100%;height:420px;margin-top:24px;order:2}
+        .lead-photo-wrap{position:relative;right:auto;width:100%;height:440px;margin-top:24px;order:2;
+          -webkit-mask-image:radial-gradient(closest-side at 50% 46%,#000 52%,transparent 100%);
+                  mask-image:radial-gradient(closest-side at 50% 46%,#000 52%,transparent 100%)}
         .lead-photo{inset:0;height:100%;object-position:50% 15%}
       }
 
@@ -4829,16 +4831,21 @@
               { y: 30, opacity: 0, duration: 1.1 },
               "-=1.0",
             );
-          gsap.to(num, {
-            yPercent: -25,
-            ease: "none",
-            scrollTrigger: {
-              trigger: cap,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
+          gsap.fromTo(
+            num,
+            { y: 30 },
+            {
+              y: -30,
+              ease: "none",
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: cap,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
             },
-          });
+          );
         });
         /* Cifras del cierre cuentan */
         $$(".hist-close-num").forEach((n) => {
