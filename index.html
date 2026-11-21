@@ -1799,9 +1799,11 @@
         border:1px solid var(--border);
         border-radius:var(--r-lg);
         padding:40px;
-        transition:transform .35s var(--ease),border-color .25s,
-                   box-shadow .35s var(--ease);
+        position:relative;
+        overflow:hidden;
+        transition:border-color .25s,box-shadow .35s var(--ease);
       }
+      .form-line{position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:left center}
       .form-card:hover{
         transform:translateY(-5px);
         border-color:var(--blue);
@@ -4753,7 +4755,22 @@
           });
         };
         rise(".cinema-ch", { y: 40 });
-        rise(".form-card");
+        /* Formación: los recuadros suben y se descubren al ritmo del scroll, escalonados */
+        const fGrid = $(".form-grid");
+        const fCards = $$(".form-card");
+        if (fGrid && fCards.length) {
+          const cols = getComputedStyle(fGrid).gridTemplateColumns.split(" ").length;
+          fCards.forEach((card, i) => {
+            card.insertAdjacentHTML("afterbegin", '<span class="form-line" aria-hidden="true"></span>');
+            const off = cols > 1 ? i * 7 : 0; /* en ordenador, cada recuadro un poco después */
+            const st = { trigger: card, start: `top ${98 - off}%`, end: `top ${58 - off}%`, scrub: 1.2 };
+            gsap.fromTo(card,
+              { y: 120, opacity: 0, clipPath: "inset(35% 0% 0% 0% round 16px)" },
+              { y: 0, opacity: 1, clipPath: "inset(0% 0% 0% 0% round 16px)", ease: "power2.out", scrollTrigger: st });
+            gsap.fromTo(card.querySelector(".form-line"), { scaleX: 0 }, { scaleX: 1, ease: "none",
+              scrollTrigger: { ...st, start: `top ${85 - off}%`, end: `top ${45 - off}%` } });
+          });
+        }
         rise(".faq-item", { y: 30 });
         rise(".chip", { y: 30 });
         rise(".qr-wrap", { y: 40 });
@@ -4831,21 +4848,6 @@
               { y: 30, opacity: 0, duration: 1.1 },
               "-=1.0",
             );
-          gsap.fromTo(
-            num,
-            { y: 30 },
-            {
-              y: -30,
-              ease: "none",
-              immediateRender: false,
-              scrollTrigger: {
-                trigger: cap,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
         });
         /* Cifras del cierre cuentan */
         $$(".hist-close-num").forEach((n) => {
