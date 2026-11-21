@@ -2017,9 +2017,12 @@
       footer{
         border-top:1px solid var(--border);
         padding:26px 64px;
-        display:flex;justify-content:space-between;align-items:center;
+        display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px 24px;
         background:var(--page);
       }
+      .f-credit{font-family:var(--ff-b);font-size:.75rem;color:var(--ink-d)}
+      .f-credit a{color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1px solid var(--blue-a400);transition:border-color .2s}
+      .f-credit a:hover{border-color:var(--blue)}
       .f-n{font-family:var(--ff-h);font-weight:700;font-size:.88rem}
       .f-m{font-family:var(--ff-m);font-size:.75rem;color:var(--ink-d);letter-spacing:.06em}
 
@@ -2419,7 +2422,7 @@
       .exp-panel-ticks{position:relative;height:1em;margin-top:10px;font:600 .72rem/1 var(--ff-b);color:var(--white);font-variant-numeric:tabular-nums}
       .exp-panel-ticks span{position:absolute;top:0;transform:translateX(-50%)}
       .exp-panel-years,.exp-panel-chips,.exp-panel-brand{transition:opacity .35s var(--ease),transform .35s var(--ease)}
-      .js .exp-panel.changing .exp-panel-years,.js .exp-panel.changing .exp-panel-chips,.js .exp-panel.changing .exp-panel-brand{opacity:0;transform:translateY(10px)}
+      .js .exp-panel.changing .exp-panel-chips,.js .exp-panel.changing .exp-panel-brand{opacity:0;transform:translateY(10px)}
       .exp-portrait .exp-photo{
         width:100%;
         height:100%;
@@ -2676,7 +2679,10 @@
       @keyframes cinema-kb{from{transform:scale(1)}to{transform:scale(1.06)}}
       .cinema-screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
         background:linear-gradient(to top,rgba(5,13,29,.75) 0%,rgba(5,13,29,0) 45%),radial-gradient(ellipse 120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.45))}
-      .cinema-media{position:absolute;inset:0;z-index:4}
+      .cinema-media{position:absolute;inset:0;z-index:4;pointer-events:none}
+      .cinema-screen.is-playing .cinema-media{pointer-events:auto}
+      .cinema-screen:not(.is-playing){cursor:pointer}
+      .cinema-screen:not(.is-playing):hover .cinema-play-ring{transform:scale(1.08)}
       .cinema-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
       .cinema-screen.is-playing::after,.cinema-screen.is-playing .cinema-play,.cinema-screen.is-playing .cinema-bar{opacity:0;pointer-events:none}
 
@@ -2727,6 +2733,16 @@
 
       /* Presentación reproduciéndose en su marco */
       .vp-frame .vp-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+      .vp-sound{position:absolute;z-index:4;left:50%;bottom:22px;transform:translateX(-50%);display:none;align-items:center;gap:10px;
+        padding:12px 20px 12px 16px;border:0;border-radius:var(--r-pill);background:var(--white);color:var(--blue);
+        font:600 .9rem/1 var(--ff-b);cursor:pointer;box-shadow:0 12px 34px rgba(0,0,0,.4);
+        animation:vp-sound-in .6s var(--ease) .4s both}
+      .vp-sound svg{width:20px;height:20px;fill:currentColor}
+      .vp-sound::before{content:"";position:absolute;inset:-6px;border-radius:inherit;border:1.5px solid rgba(255,255,255,.7);animation:cinema-pulse 2.2s var(--ease) infinite}
+      .vp-sound:hover{transform:translateX(-50%) scale(1.04)}
+      .vp-frame.is-muted .vp-sound{display:inline-flex}
+      @keyframes vp-sound-in{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translateX(-50%)}}
+      @media (prefers-reduced-motion:reduce){.vp-sound,.vp-sound::before{animation:none}}
       .vp-frame.is-playing{cursor:default}
       .vp-frame.is-playing:hover{transform:none}
       .vp-frame.is-playing .vp-ph,.vp-frame.is-playing .vp-thumb{visibility:hidden}
@@ -2750,6 +2766,72 @@
         .cinema-play-ring::before{animation:none;display:none}
         .cinema-bar{display:none}
         .cinema-cover,.cinema-glow,.ch-desc{transition:none}
+      }
+
+      /* ════════════════════════════════════════════════
+         BANDA EDITORIAL CON RETRATO
+      ════════════════════════════════════════════════ */
+      .lead-band{position:relative;overflow:hidden;isolation:isolate;min-height:min(92vh,860px);
+        display:flex;align-items:center;color:var(--white);
+        background:radial-gradient(ellipse 55% 80% at 78% 55%,#1b47a8 0%,#0f2a5c 40%,var(--navy-1) 85%);
+        padding:120px max(64px,calc((100% - 1440px) / 2 + 64px))}
+      .lead-band::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+        background:linear-gradient(90deg,var(--navy-1) 0%,rgba(7,20,38,.92) 34%,rgba(7,20,38,.25) 62%,rgba(7,20,38,0) 80%),
+          linear-gradient(to top,rgba(7,20,38,.85) 0%,rgba(7,20,38,0) 30%)}
+      .lead-photo-wrap{position:absolute;z-index:0;top:0;bottom:0;right:max(0px,calc((100% - 1440px) / 2));width:min(52%,720px);
+        -webkit-mask-image:radial-gradient(ellipse 72% 68% at 55% 42%,#000 42%,transparent 76%);
+                mask-image:radial-gradient(ellipse 72% 68% at 55% 42%,#000 42%,transparent 76%)}
+      .lead-photo{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;object-position:50% 4%;
+        filter:grayscale(1) contrast(1.15) brightness(.95);mix-blend-mode:luminosity;opacity:.9;}
+      .lead-photo-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;
+        background:radial-gradient(ellipse 70% 65% at 55% 40%,#2563eb,#0e3080);mix-blend-mode:color;opacity:.55}
+      .lead-copy{position:relative;z-index:2;max-width:640px}
+      .lead-eyebrow{font:500 .85rem/1 var(--ff-b);color:#93c5fd;margin-bottom:28px;display:flex;align-items:center;gap:14px}
+      .lead-eyebrow::before{content:"";width:36px;height:2px;background:#93c5fd}
+      .lead-quote{margin:0;font-family:var(--ff-e);font-size:clamp(2rem,3.6vw,3.3rem);line-height:1.12;letter-spacing:-.01em;color:var(--white)}
+      .lead-quote em{color:#93c5fd}
+      .lead-sign{margin-top:40px;display:flex;flex-direction:column;gap:4px}
+      .lead-sign strong{font:800 1.1rem/1.2 var(--ff-h)}
+      .lead-sign span{font:500 .9rem/1.3 var(--ff-b);color:rgba(255,255,255,.8)}
+      .lead-cta{margin-top:36px;display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:var(--r-pill);
+        background:var(--white);color:var(--blue);font:600 .95rem/1 var(--ff-b);text-decoration:none;
+        transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+      .lead-cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+      .lead-cta span{transition:transform .3s var(--ease)}
+      .lead-cta:hover span{transform:translateX(4px)}
+      .lead-band :focus-visible{outline:2px solid var(--focus-on-dark);outline-offset:3px}
+      @media (max-width:900px){
+        .lead-band{min-height:auto;padding:96px 24px 0;flex-direction:column;align-items:stretch}
+        .lead-band::after{background:linear-gradient(to bottom,var(--navy-1) 0%,rgba(7,20,38,.6) 45%,rgba(7,20,38,0) 70%,rgba(7,20,38,.6) 100%)}
+        .lead-photo-wrap{position:relative;right:auto;width:100%;height:420px;margin-top:24px;order:2}
+        .lead-photo{inset:0;height:100%;object-position:50% 15%}
+      }
+
+      /* ════════════════════════════════════════════════
+         CINEMATOGRAFÍA: grano, rodillo de años, línea de tiempo
+      ════════════════════════════════════════════════ */
+      .grain{position:absolute;inset:-50%;z-index:0;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        animation:grain-shift .9s steps(6) infinite}
+      @keyframes grain-shift{
+        0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}
+        60%{transform:translate(-6%,-2%)}80%{transform:translate(5%,4%)}100%{transform:translate(0,0)}}
+      .cinema,.lead-band,.contact{will-change:clip-path}
+
+      .exp-panel-years .dg{display:inline-block;height:1em;overflow:hidden;vertical-align:top}
+      .exp-panel-years .dg-col{display:flex;flex-direction:column;transition:transform 1s cubic-bezier(.7,0,.25,1)}
+      .exp-panel-years .dg-col span{display:block;height:1em;line-height:1}
+      .exp-panel-years > span{line-height:1}
+      .exp-panel-years .dg-wrap{display:inline-flex}
+
+      .exp-fill .exp-panel-track span,.exp-fill .exp-panel-track span.on{position:relative;overflow:hidden;background:rgba(255,255,255,.22)}
+      .exp-fill .exp-panel-track span::after{content:"";position:absolute;inset:0;background:var(--white);
+        transform-origin:right center;transform:scaleX(var(--fill,0))}
+      .exp-fill .exp-panel-track span.on{box-shadow:0 0 12px rgba(147,197,253,.6)}
+
+      @media (prefers-reduced-motion:reduce){
+        .grain{animation:none}
+        .exp-panel-years .dg-col{transition:none}
       }
     </style>
   </head>
@@ -3359,6 +3441,21 @@
     </section>
 
     <!-- ════════════ HISTORIA — narrative journey ════════════ -->
+    <!-- ════════════ BANDA EDITORIAL CON RETRATO ════════════ -->
+    <section class="lead-band" aria-label="Mi forma de liderar">
+      <div class="lead-photo-wrap" aria-hidden="true">
+        <img class="lead-photo" src="foto-sentado.jpg" alt="" width="1137" height="1700" loading="lazy" decoding="async" />
+      </div>
+      <div class="lead-copy">
+        <p class="lead-eyebrow fu">Mi forma de liderar</p>
+        <blockquote class="lead-quote fu d1">
+          Cercano al terreno y a las personas: <em>escucha, confianza y exigencia</em> para convertir la estrategia en resultados.
+        </blockquote>
+        <p class="lead-sign fu d2"><strong>Jonathan Domínguez Díaz</strong><span>Área Manager · Operaciones Retail</span></p>
+        <a class="lead-cta fu d3" href="#contacto">Hablamos <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
     <section id="enfoque" class="historia" aria-label="Trayectoria personal">
       <!-- Header -->
       <div class="hist-head fu">
@@ -3711,6 +3808,10 @@
       <span class="f-m"
         >Área Manager, Dirección de Operaciones Retail. 2026</span
       >
+      <span class="f-credit"
+        >Diseño y desarrollo:
+        <a href="https://saulpoveda.com" target="_blank" rel="noopener">Saúl Poveda</a></span
+      >
     </footer>
 
     <!-- ════════════ VIDEO MODAL ════════════ -->
@@ -3833,26 +3934,80 @@
           }
         }
 
-        /* Presentación: el vídeo arranca dentro de su propio marco */
+        /* Presentación: al llegar al bloque arranca sola en silencio; un clic activa el sonido */
         const vpFrame = document.getElementById("vpFrameBtn");
-        function playPresentation() {
-          if (!vpFrame || vpFrame.classList.contains("is-playing")) return;
+        const vpCalm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let vpIframe = null, vpMuted = true;
+
+        /* Órdenes al reproductor de YouTube sin cargar su librería */
+        function ytCmd(func, args = []) {
+          vpIframe?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+        }
+
+        function startPresentation(muted) {
+          if (!vpFrame) return;
+          if (vpIframe) {
+            if (!muted) unmutePresentation();
+            return;
+          }
+          vpMuted = muted;
           vpFrame.classList.add("is-playing");
+          vpFrame.classList.toggle("is-muted", muted);
           vpFrame.removeAttribute("role");
           vpFrame.removeAttribute("tabindex");
+          const params = `autoplay=1&rel=0&playsinline=1&modestbranding=1&enablejsapi=1${muted ? "&mute=1" : ""}&origin=${encodeURIComponent(location.origin)}`;
           vpFrame.insertAdjacentHTML(
             "beforeend",
-            `<iframe class="vp-iframe" src="https://www.youtube-nocookie.com/embed/${PRESENTATION_ID}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
-              title="Vídeo de presentación" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`,
+            `<iframe class="vp-iframe" src="https://www.youtube-nocookie.com/embed/${PRESENTATION_ID}?${params}"
+              title="Vídeo de presentación" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+             <button class="vp-sound" type="button" aria-label="Activar sonido del vídeo">
+               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+               Activar sonido
+             </button>`,
           );
+          vpIframe = vpFrame.querySelector(".vp-iframe");
+          /* YouTube necesita oír que le escuchamos antes de aceptar órdenes */
+          vpIframe.addEventListener("load", () =>
+            vpIframe.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "vp" }), "*"),
+          );
+          vpFrame.querySelector(".vp-sound").addEventListener("click", (e) => {
+            e.stopPropagation();
+            unmutePresentation();
+          });
         }
-        vpFrame?.addEventListener("click", playPresentation);
+
+        function unmutePresentation() {
+          vpMuted = false;
+          ytCmd("unMute");
+          ytCmd("setVolume", [100]);
+          ytCmd("playVideo");
+          vpFrame.classList.remove("is-muted");
+        }
+
+        /* Antes de llegar: un clic en la portada reproduce con sonido */
+        vpFrame?.addEventListener("click", () => startPresentation(false));
         vpFrame?.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
+          if ((e.key === "Enter" || e.key === " ") && !vpIframe) {
             e.preventDefault();
-            playPresentation();
+            startPresentation(false);
           }
         });
+
+        /* Llega al bloque: arranca en silencio. Se va: pausa. Vuelve: continúa */
+        if (vpFrame && !vpCalm && "IntersectionObserver" in window) {
+          new IntersectionObserver(
+            (entries) =>
+              entries.forEach((en) => {
+                if (en.isIntersecting) {
+                  if (!vpIframe) startPresentation(true);
+                  else ytCmd("playVideo");
+                } else if (vpIframe) {
+                  ytCmd("pauseVideo");
+                }
+              }),
+            { threshold: 0.6 },
+          ).observe(vpFrame);
+        }
         modalClose?.addEventListener("click", closeModal);
         modal?.addEventListener("click", (e) => {
           if (e.target === modal) closeModal();
@@ -3932,6 +4087,11 @@
             .forEach((el) => io.observe(el));
         })();
 
+        /* ── Grano de película en las secciones oscuras ── */
+        document.querySelectorAll(".cinema, .lead-band, .contact").forEach((sec) =>
+          sec.insertAdjacentHTML("afterbegin", '<div class="grain" aria-hidden="true"></div>'),
+        );
+
         /* ── SALA DE PROYECCIÓN: un clic y el vídeo suena aquí mismo ── */
         (function () {
           const screen = document.getElementById("cinemaScreen");
@@ -3997,7 +4157,8 @@
               } else select(i);
             }),
           );
-          playBtn?.addEventListener("click", () => {
+          screen.addEventListener("click", () => {
+            if (playing) return;
             userTouched = true;
             play();
           });
@@ -4025,6 +4186,31 @@
         /* ── EXP STICKY: sin parpadeo ────────────────────
    Solo anima cuando el job CAMBIA de verdad.
    rAF throttle → máximo 1 cálculo por frame.      */
+        /* Rodillo de dígitos: cada cifra gira hasta su valor, como un contador mecánico */
+        function rollYear(el, year) {
+          if (!el || !year) return;
+          if (!el.querySelector(".dg")) {
+            const start = el.textContent.trim();
+            el.setAttribute("aria-label", start);
+            el.innerHTML = '<span class="dg-wrap">' + start
+              .split("")
+              .map(
+                (d, i) =>
+                  `<span class="dg" aria-hidden="true"><span class="dg-col" style="transition-delay:${i * 70}ms;transform:translateY(-${+d}em)">${"0123456789"
+                    .split("")
+                    .map((n) => `<span>${n}</span>`)
+                    .join("")}</span></span>`,
+              )
+              .join("") + "</span>";
+          }
+          el.setAttribute("aria-label", year);
+          el.querySelectorAll(".dg-col").forEach((col, i) => {
+            col.style.transform = `translateY(-${+year[i]}em)`;
+          });
+        }
+        rollYear(document.getElementById("expPanelFrom"), "2017");
+        rollYear(document.getElementById("expPanelTo"), "2026");
+
         let _expActiveIdx = -1;
         let _expAnimTimer = null;
 
@@ -4040,8 +4226,8 @@
             if (expStickPd) expStickPd.textContent = job.dataset.period;
             const [yFrom, yTo] = (job.dataset.years || "").split("|");
             const setTxt = (id, t) => { const el = document.getElementById(id); if (el && t) el.textContent = t; };
-            setTxt("expPanelFrom", yFrom);
-            setTxt("expPanelTo", yTo);
+            rollYear(document.getElementById("expPanelFrom"), yFrom);
+            rollYear(document.getElementById("expPanelTo"), yTo);
             setTxt("expPanelBrand", job.dataset.brand);
             const chipsEl = document.getElementById("expPanelChips");
             if (chipsEl && job.dataset.chips)
@@ -4496,6 +4682,25 @@
               },
             },
           );
+          /* Línea de tiempo: se rellena de 2026 hacia 2010 según avanzas por la trayectoria */
+          const segs = $$(".exp-panel-track span");
+          const YEARS = { 0: [0, 9], 1: [9, 3], 2: [12, 4] }; /* [años previos desde 2026, duración] */
+          if (segs.length) {
+            document.documentElement.classList.add("exp-fill");
+            ScrollTrigger.create({
+              trigger: expBody,
+              start: "top 60%",
+              end: "bottom bottom",
+              onUpdate: (self) => {
+                const covered = self.progress * 16;
+                segs.forEach((s) => {
+                  const [before, len] = YEARS[s.dataset.job];
+                  const p = Math.max(0, Math.min(1, (covered - before) / len));
+                  s.style.setProperty("--fill", p.toFixed(3));
+                });
+              },
+            });
+          }
           const dots = $("#expDots");
           if (dots) {
             const bar = document.createElement("div");
@@ -4551,6 +4756,20 @@
         rise(".chip", { y: 30 });
         rise(".qr-wrap", { y: 40 });
         rise(".hist-close > :not(.hist-close-bar)", { y: 40 });
+
+        /* Secciones oscuras: se abren desde una tarjeta hasta llenar la pantalla */
+        $$(".cinema, .lead-band, .contact").forEach((sec) => {
+          gsap.fromTo(sec,
+            { clipPath: "inset(7% 5% 0% 5% round 36px)" },
+            { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none",
+              scrollTrigger: { trigger: sec, start: "top bottom", end: "top 20%", scrub: 0.6 } });
+        });
+
+        /* Banda con retrato: la foto se desliza despacio */
+        gsap.fromTo(".lead-photo",
+          { yPercent: -5, scale: 1.06 },
+          { yPercent: 5, scale: 1, ease: "none",
+            scrollTrigger: { trigger: ".lead-band", start: "top bottom", end: "bottom top", scrub: true } });
 
         /* Sala de proyección: la pantalla se acerca al entrar */
         gsap.fromTo(".cinema-screen-wrap",
