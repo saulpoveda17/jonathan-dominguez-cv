@@ -6,7 +6,7 @@
     <title>Jonathan Domínguez Díaz · Área Manager</title>
     <meta
       name="description"
-      content="Jonathan Domínguez Díaz, Área Manager con 20 años en retail: 10 puntos de venta y 35 profesionales en Alicante y Albacete. Disponible para incorporación inmediata."
+      content="Jonathan Domínguez Díaz, Área Manager con 20 años en retail: 10 puntos de venta y 35 profesionales. Disponible para incorporación inmediata."
     />
     <script>
       (function () {
@@ -48,11 +48,12 @@
         --blue-l:    #eaf0fc;
         --blue-text: #1e40af;
         --white:     oklch(99.7% 0.004 262);
-        --off:       #f3f6fb;
+        --off:       #c4c9d1;
+        --page:      #d3d7dd;
         --ink:       #0b0f1e;
-        --ink-s:     #374151;
-        --ink-d:     #566173;
-        --border:    #dce3ef;
+        --ink-s:     #1f2733;
+        --ink-d:     #343d4b;
+        --border:    #a3acb9;
 
         /* Dark section palette — deep navy, NEVER pure black */
         --navy-1:    #071426;
@@ -100,13 +101,13 @@
         --c-0a0a0a: #0a0a0a;
         --c-0c0c0c: #0c0c0c;
         --c-0d0d0d: #0d0d0d;
-        --c-4b5568: #4b5568;
-        --c-5a6375: #5a6375;
+        --c-4b5568: #2a3341;
+        --c-5a6375: #333c4a;
         --c-60a5fa: #60a5fa;
         --c-e11d48: #e11d48;
         --navy-a780: rgba(7,20,38,.78);
         --navy-a880: rgba(7,20,38,.88);
-        --off-a800: rgba(243,246,251,.8);
+        --off-a800: rgba(196,201,209,.8);
         --warm-2-a060: rgba(255,246,220,.06);
         --warm-2-a070: rgba(255,246,220,.07);
         --warm-2-a080: rgba(255,246,220,.08);
@@ -159,7 +160,7 @@
         font-size:16px;
         line-height:1.65;
         color:var(--ink);
-        background:var(--white);
+        background:var(--page);
         overflow-x:clip;
       }
 
@@ -367,7 +368,7 @@
 
       /* ── RIGHT — WHITE ── */
       .hero-r{
-        background:var(--white);
+        background:var(--page);
         display:flex;
         flex-direction:column;
         justify-content:center;
@@ -526,7 +527,7 @@
         font-weight:700;
         letter-spacing:.22em;
         text-transform:uppercase;
-        color:var(--white-a550);
+        color:var(--white);
         padding:0 48px;
         white-space:nowrap;
         display:flex;align-items:center;gap:48px;
@@ -549,7 +550,7 @@
       .stats{
         padding:100px 64px;
         border-top:1px solid var(--border);
-        background:var(--white);
+        background:var(--page);
       }
       .js .stats-hd{
         font-family:var(--ff-m);
@@ -1469,7 +1470,7 @@
         font-family:var(--ff-h);
         font-size:min(16vw,160px);
         font-weight:800;
-        color:var(--blue-a040);
+        color:var(--blue-a180);
         position:absolute;
         bottom:-10px;right:16px;
         line-height:1;
@@ -1522,7 +1523,7 @@
       .competencias{
         padding:100px 64px;
         border-top:1px solid var(--border);
-        background:var(--white);
+        background:var(--page);
       }
       .comp-sup{
         font-family:var(--ff-m);
@@ -1594,7 +1595,7 @@
          HISTORIA — narrative journey section
       ════════════════════════════════════════════════ */
       .historia{
-        background:var(--white);
+        background:var(--page);
         border-top:1px solid var(--border);
         padding:100px 0 0;
         position:relative;
@@ -1667,7 +1668,7 @@
         font-size:clamp(3rem,6vw,5.5rem);
         font-weight:800;
         letter-spacing:-.05em;
-        color:var(--black-a060);
+        color:var(--blue);
         line-height:1;
         padding-top:6px;
         flex-shrink:0;
@@ -1844,7 +1845,7 @@
       ════════════════════════════════════════════════ */
       .faq{
         padding:100px 64px;
-        background:var(--white);
+        background:var(--page);
         border-top:1px solid var(--border);
       }
       .faq-hd{
@@ -2017,7 +2018,7 @@
         border-top:1px solid var(--border);
         padding:26px 64px;
         display:flex;justify-content:space-between;align-items:center;
-        background:var(--white);
+        background:var(--page);
       }
       .f-n{font-family:var(--ff-h);font-weight:700;font-size:.88rem}
       .f-m{font-family:var(--ff-m);font-size:.75rem;color:var(--ink-d);letter-spacing:.06em}
@@ -2393,6 +2394,32 @@
         overflow:hidden;
         background:radial-gradient(120% 80% at 50% 20%,var(--blue-m),var(--blue) 55%,var(--blue-d));
       }
+      /* Panel de trayectoria (sustituye a la foto) */
+      .exp-panel{position:relative;display:flex;flex-direction:column;justify-content:space-between;
+        padding:clamp(22px,2.4vw,34px);color:var(--white);isolation:isolate;
+        box-shadow:0 24px 60px var(--blue-a250)}
+      .exp-panel-grid{position:absolute;inset:-10%;z-index:-1;pointer-events:none;
+        background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+        background-size:36px 36px;
+        -webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 20%,transparent 75%);
+                mask-image:radial-gradient(ellipse 80% 70% at 70% 30%,#000 20%,transparent 75%)}
+      .exp-panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;
+        font:600 .8rem/1 var(--ff-b);color:var(--white)}
+      .exp-panel-brand{padding:7px 12px;border-radius:var(--r-pill);background:var(--white);color:var(--blue);font-weight:700}
+      .exp-panel-years{display:flex;flex-direction:column;font-family:var(--ff-h);font-weight:800;
+        font-size:clamp(3rem,6.2vw,5.6rem);line-height:.92;letter-spacing:-.04em}
+      .exp-panel-to{color:var(--c-93c5fd,#93c5fd);display:flex;align-items:center;gap:.25em}
+      .exp-panel-to::before{content:"";width:.6em;height:.09em;border-radius:4px;background:currentColor}
+      .exp-panel-chips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+      .exp-panel-chips li{display:flex;align-items:center;gap:10px;font:600 .9rem/1.2 var(--ff-b);color:var(--white)}
+      .exp-panel-chips li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:#93c5fd;box-shadow:0 0 0 4px rgba(147,197,253,.2)}
+      .exp-panel-track{display:flex;gap:4px;height:6px}
+      .exp-panel-track span{border-radius:4px;background:rgba(255,255,255,.25);transition:background .4s var(--ease)}
+      .exp-panel-track span.on{background:var(--white)}
+      .exp-panel-ticks{position:relative;height:1em;margin-top:10px;font:600 .72rem/1 var(--ff-b);color:var(--white);font-variant-numeric:tabular-nums}
+      .exp-panel-ticks span{position:absolute;top:0;transform:translateX(-50%)}
+      .exp-panel-years,.exp-panel-chips,.exp-panel-brand{transition:opacity .35s var(--ease),transform .35s var(--ease)}
+      .js .exp-panel.changing .exp-panel-years,.js .exp-panel.changing .exp-panel-chips,.js .exp-panel.changing .exp-panel-brand{opacity:0;transform:translateY(10px)}
       .exp-portrait .exp-photo{
         width:100%;
         height:100%;
@@ -2449,15 +2476,15 @@
       .h-badge::before,.nav-disponible::before{display:none}
       .contact::before,.vtabs::before,.historia::before,.exp-sticky-col::before{display:none}
       .hist-h1 em{color:inherit}
-      .hist-num,.comp-num{color:var(--blue-l)}
+      .hist-num,.comp-num{color:var(--blue)}
 
       /* Franja azul: estática, legible */
       .marquee-strip{padding:20px 64px}
       .marquee-track{animation:none;width:auto;flex-wrap:wrap;justify-content:center;row-gap:8px}
-      .marquee-item:nth-child(n+9){display:none}
+      .marquee-item:nth-child(n+8){display:none}
       .marquee-item{font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--white);padding:0 20px;gap:40px}
       .marquee-item::after{content:'';width:1px;height:14px;background:var(--white-a300)}
-      .marquee-item:nth-child(8)::after{display:none}
+      .marquee-item:nth-child(7)::after{display:none}
 
       /* Vídeos: tres tarjetas limpias en lugar de vitrinas con sombras */
       .vniches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;height:auto;padding:0 64px;border-top:0;cursor:default}
@@ -2585,13 +2612,13 @@
       /* Franja azul en bucle, reacciona a la velocidad del scroll */
       .js.cine .marquee-strip{padding:26px 0}
       .js.cine .marquee-track{flex-wrap:nowrap;width:max-content;justify-content:flex-start}
-      .js.cine .marquee-item:nth-child(n+9){display:flex}
+      .js.cine .marquee-item:nth-child(n+8){display:flex}
       .js.cine .marquee-item{
         font-family:var(--ff-h);font-weight:800;letter-spacing:-.02em;
         font-size:clamp(1.4rem,2.6vw,2.4rem);padding:0 36px;gap:72px;color:var(--white)
       }
-      .js.cine .marquee-item:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--outline-ink)}
-      .js.cine .marquee-item::after,.js.cine .marquee-item:nth-child(8)::after{display:block;width:10px;height:10px;border-radius:50%;background:var(--white-a300);-webkit-text-stroke:0}
+      .js.cine .marquee-item{color:var(--white);-webkit-text-stroke:0}
+      .js.cine .marquee-item::after,.js.cine .marquee-item:nth-child(7)::after{display:block;width:10px;height:10px;border-radius:50%;background:var(--white-a300);-webkit-text-stroke:0}
 
       /* Vídeo: anillo que respira en el botón de play */
       .vp-play{position:relative}
@@ -2618,6 +2645,111 @@
         .js.cine .intro{display:none}
         .js.cine .hero{visibility:visible}
         .js.cine .vp-play::after{animation:none;display:none}
+      }
+
+      /* ════════════════════════════════════════════════
+         SALA DE PROYECCIÓN (vídeos)
+      ════════════════════════════════════════════════ */
+      .cinema{position:relative;overflow:hidden;color:var(--white);
+        background:radial-gradient(ellipse 70% 60% at 35% 55%,#0f2a5c 0%,var(--navy-2) 45%,var(--navy-1) 100%);
+        padding:120px max(64px,calc((100% - 1440px) / 2 + 64px)) 130px}
+      .cinema::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+        background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+        background-size:72px 72px;
+        -webkit-mask-image:radial-gradient(ellipse 60% 70% at 35% 50%,#000,transparent 75%);
+                mask-image:radial-gradient(ellipse 60% 70% at 35% 50%,#000,transparent 75%)}
+      .cinema-head{position:relative;max-width:900px;margin-bottom:56px}
+      .cinema-eyebrow{font:500 .85rem/1 var(--ff-b);color:#93c5fd;margin-bottom:18px}
+      .cinema-title{font-family:var(--ff-h);font-weight:800;font-size:clamp(2rem,4vw,3.4rem);line-height:1.05;letter-spacing:-.03em;color:var(--white)}
+      .cinema-stage{position:relative;display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:40px;align-items:center}
+
+      /* Pantalla */
+      .cinema-screen-wrap{position:relative;transform-origin:50% 60%}
+      .cinema-glow{position:absolute;inset:6% 4%;width:92%;height:88%;object-fit:cover;filter:blur(60px) saturate(1.4);
+        opacity:0;transition:opacity 1.2s var(--ease);pointer-events:none;z-index:0}
+      .cinema-glow.is-on{opacity:.55}
+      .cinema-screen{position:relative;z-index:1;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;
+        box-shadow:0 0 0 1px rgba(255,255,255,.12),0 50px 120px rgba(0,0,0,.6)}
+      .cinema-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+        opacity:0;transform:scale(1.08);transition:opacity 1s var(--ease),transform 1.6s var(--ease)}
+      .cinema-cover.is-on{opacity:1;transform:scale(1);animation:cinema-kb 14s ease-in-out infinite alternate}
+      @keyframes cinema-kb{from{transform:scale(1)}to{transform:scale(1.06)}}
+      .cinema-screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+        background:linear-gradient(to top,rgba(5,13,29,.75) 0%,rgba(5,13,29,0) 45%),radial-gradient(ellipse 120% 90% at 50% 50%,transparent 60%,rgba(0,0,0,.45))}
+      .cinema-media{position:absolute;inset:0;z-index:4}
+      .cinema-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+      .cinema-screen.is-playing::after,.cinema-screen.is-playing .cinema-play,.cinema-screen.is-playing .cinema-bar{opacity:0;pointer-events:none}
+
+      /* Botón de reproducir */
+      .cinema-play{position:absolute;z-index:3;left:32px;bottom:28px;display:flex;align-items:center;gap:18px;
+        background:none;border:0;color:var(--white);cursor:pointer;font:inherit;padding:0;transition:opacity .4s var(--ease)}
+      .cinema-play-ring{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;
+        background:var(--white);box-shadow:0 12px 40px rgba(0,0,0,.45);transition:transform .4s var(--ease),background .3s}
+      .cinema-play-ring::before{content:"";position:absolute;inset:-10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);
+        animation:cinema-pulse 2.4s var(--ease) infinite}
+      @keyframes cinema-pulse{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.35);opacity:0}}
+      .cinema-play-ring svg{width:28px;height:28px;fill:var(--blue);margin-left:4px}
+      .cinema-play:hover .cinema-play-ring,.cinema-play:focus-visible .cinema-play-ring{transform:scale(1.08)}
+      .cinema-play-txt{font:600 1rem/1.2 var(--ff-b);text-align:left;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+      .cinema-play-txt b{display:block;font:800 1.5rem/1.1 var(--ff-h);letter-spacing:-.02em}
+
+      /* Bandas de cine: se abren al entrar en pantalla */
+      .cinema-bar{position:absolute;left:0;right:0;height:13%;background:#000;z-index:3;transform-origin:top;
+        transition:transform 1.4s cubic-bezier(.76,0,.24,1) .2s,opacity .4s}
+      .cinema-bar-t{top:0}
+      .cinema-bar-b{bottom:0;transform-origin:bottom}
+      .cinema.is-in .cinema-bar{transform:scaleY(0)}
+
+      /* Capítulos */
+      .cinema-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+      .cinema-ch{position:relative;width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;text-align:left;
+        padding:22px 22px 24px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+        color:var(--white);font:inherit;cursor:pointer;overflow:hidden;
+        transition:background .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+      .cinema-ch:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.22);transform:translateX(4px)}
+      .cinema-ch.is-active{background:rgba(37,99,235,.18);border-color:rgba(147,197,253,.55)}
+      .ch-num{font:800 1.6rem/1 var(--ff-h);color:#93c5fd;letter-spacing:-.03em;font-variant-numeric:tabular-nums;padding-top:2px}
+      .ch-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
+      .ch-txt strong{font:800 1.25rem/1.15 var(--ff-h);letter-spacing:-.02em}
+      .ch-sub{font:500 .9rem/1.3 var(--ff-b);color:rgba(255,255,255,.78)}
+      .ch-desc{font:400 .85rem/1.55 var(--ff-b);color:rgba(255,255,255,.72);max-height:0;opacity:0;overflow:hidden;
+        transition:max-height .6s var(--ease),opacity .4s var(--ease),margin .4s var(--ease)}
+      .cinema-ch.is-active .ch-desc{max-height:9em;opacity:1;margin-top:8px}
+      .ch-go{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);transition:background .3s,border-color .3s}
+      .ch-go svg{width:14px;height:14px;fill:var(--white);margin-left:2px}
+      .cinema-ch.is-active .ch-go,.cinema-ch:hover .ch-go{background:var(--white);border-color:var(--white)}
+      .cinema-ch.is-active .ch-go svg,.cinema-ch:hover .ch-go svg{fill:var(--blue)}
+      .ch-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.08)}
+      .ch-progress i{display:block;height:100%;width:100%;background:#93c5fd;transform:scaleX(0);transform-origin:left}
+      .cinema.is-cycling .cinema-ch.is-active .ch-progress i{animation:cinema-progress 7s linear forwards}
+      @keyframes cinema-progress{to{transform:scaleX(1)}}
+      .cinema :focus-visible{outline:2px solid var(--focus-on-dark);outline-offset:3px}
+
+      /* Presentación reproduciéndose en su marco */
+      .vp-frame .vp-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
+      .vp-frame.is-playing{cursor:default}
+      .vp-frame.is-playing:hover{transform:none}
+      .vp-frame.is-playing .vp-ph,.vp-frame.is-playing .vp-thumb{visibility:hidden}
+
+      @media (max-width:1100px){
+        .cinema{padding:96px 32px 104px}
+        .cinema-stage{grid-template-columns:minmax(0,1fr);gap:24px}
+      }
+      @media (max-width:640px){
+        .cinema{padding:80px 20px 88px}
+        .cinema-head{margin-bottom:36px}
+        .cinema-screen{border-radius:12px}
+        .cinema-play{left:16px;bottom:14px;gap:12px}
+        .cinema-play-ring{width:56px;height:56px}
+        .cinema-play-ring svg{width:22px;height:22px}
+        .cinema-play-txt b{font-size:1.1rem}
+        .cinema-ch{padding:18px 16px 20px;gap:14px}
+      }
+      @media (prefers-reduced-motion:reduce){
+        .cinema-cover.is-on{animation:none}
+        .cinema-play-ring::before{animation:none;display:none}
+        .cinema-bar{display:none}
+        .cinema-cover,.cinema-glow,.ch-desc{transition:none}
       }
     </style>
   </head>
@@ -2769,23 +2901,21 @@
     <!-- ════════════ MARQUEE — between sections ════════════ -->
     <div class="marquee-strip" aria-hidden="true">
       <div class="marquee-track">
+        <span class="marquee-item">Liderazgo</span>
         <span class="marquee-item">Área Manager</span>
-        <span class="marquee-item">Retail &amp; Telco</span>
-        <span class="marquee-item">20 Años</span>
-        <span class="marquee-item">10 Tiendas</span>
-        <span class="marquee-item">35 Personas</span>
-        <span class="marquee-item">90% Objetivos</span>
-        <span class="marquee-item">Liderazgo Real</span>
-        <span class="marquee-item">Movistar</span>
+        <span class="marquee-item">Gestión integral</span>
+        <span class="marquee-item">Disciplina</span>
+        <span class="marquee-item">Cercanía</span>
+        <span class="marquee-item">Feedback</span>
+        <span class="marquee-item">Planes de acción</span>
         <!-- repeat for seamless loop -->
+        <span class="marquee-item">Liderazgo</span>
         <span class="marquee-item">Área Manager</span>
-        <span class="marquee-item">Retail &amp; Telco</span>
-        <span class="marquee-item">20 Años</span>
-        <span class="marquee-item">10 Tiendas</span>
-        <span class="marquee-item">35 Personas</span>
-        <span class="marquee-item">90% Objetivos</span>
-        <span class="marquee-item">Liderazgo Real</span>
-        <span class="marquee-item">Movistar</span>
+        <span class="marquee-item">Gestión integral</span>
+        <span class="marquee-item">Disciplina</span>
+        <span class="marquee-item">Cercanía</span>
+        <span class="marquee-item">Feedback</span>
+        <span class="marquee-item">Planes de acción</span>
       </div>
     </div>
 
@@ -2796,7 +2926,7 @@
         <div class="stat fu stagger-item">
           <div class="stat-n"><span class="ctr" data-to="10">10</span></div>
           <div class="stat-l">
-            Puntos de venta<br />o PDVs bajo mi supervisión
+            Puntos de venta<br />bajo mi supervisión
           </div>
         </div>
         <div class="stat fu d1 stagger-item">
@@ -2894,19 +3024,29 @@
         <!-- ─── LEFT: STICKY IMAGE ─── -->
         <div class="exp-sticky-col">
           <div class="exp-sticky-inner">
-            <div class="exp-portrait">
-              <picture>
-                <source srcset="foto-trabajo-retrato.webp" type="image/webp" />
-                <img
-                  class="exp-photo"
-                  src="foto-trabajo-retrato.png"
-                  alt="Jonathan Domínguez Díaz"
-                  width="763"
-                  height="954"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
+            <div class="exp-portrait exp-panel" id="expPanel" aria-hidden="true">
+              <div class="exp-panel-grid"></div>
+              <div class="exp-panel-head">
+                <span>Trayectoria</span>
+                <span class="exp-panel-brand" id="expPanelBrand">Movistar</span>
+              </div>
+              <div class="exp-panel-years">
+                <span id="expPanelFrom">2017</span>
+                <span class="exp-panel-to" id="expPanelTo">2026</span>
+              </div>
+              <ul class="exp-panel-chips" id="expPanelChips">
+                <li>10 puntos de venta</li>
+                <li>35 profesionales</li>
+                <li>+90 % de objetivos</li>
+              </ul>
+              <div class="exp-panel-line">
+                <div class="exp-panel-track">
+                  <span data-job="2" style="flex:4"></span>
+                  <span data-job="1" style="flex:3"></span>
+                  <span data-job="0" style="flex:9" class="on"></span>
+                </div>
+                <div class="exp-panel-ticks"><span style="left:0;transform:none">2010</span><span style="left:25%">2014</span><span style="left:43.75%">2017</span><span style="right:0;left:auto;transform:none">2026</span></div>
+              </div>
             </div>
 
             <div class="exp-stick-info" id="expStickInfo">
@@ -2935,6 +3075,9 @@
             data-co="Mobile Phone · Movistar"
             data-role="Área Manager"
             data-period="De 2017 a 2026 · 9 años"
+            data-years="2017|2026"
+            data-brand="Movistar"
+            data-chips="10 puntos de venta|35 profesionales|+90 % de objetivos"
           >
             <div class="exp-mob-hd">
               <p class="exp-stick-co">Mobile Phone · Movistar</p>
@@ -2944,8 +3087,7 @@
             <ul class="exp-pts">
               <li>
                 <strong>Dirección de Negocio y Operaciones:</strong> Liderazgo
-                integral de una red de 10 puntos de venta en Alicante y
-                Albacete, con responsabilidad sobre cuenta de explotación y
+                integral de una red de 10 puntos de venta, con responsabilidad sobre cuenta de explotación y
                 KPIs, optimizando la rentabilidad y alcanzando un cumplimiento
                 medio superior al 90&nbsp;% de los objetivos comerciales
                 anuales.
@@ -2973,6 +3115,9 @@
             data-co="Telyco · Movistar Oficial"
             data-role="Stock Taker · Comercial"
             data-period="De 2014 a 2017 · 4 años"
+            data-years="2014|2017"
+            data-brand="Movistar Oficial"
+            data-chips="Auditoría de red|Control de stock|Venta en tienda"
           >
             <div class="exp-mob-hd">
               <p class="exp-stick-co">Telyco · Movistar Oficial</p>
@@ -3009,6 +3154,9 @@
             data-co="Movilitika · Yoigo"
             data-role="Store Manager · Comercial"
             data-period="De 2010 a 2014 · 4 años"
+            data-years="2010|2014"
+            data-brand="Yoigo"
+            data-chips="3 puntos de venta|Selección y formación|Conversión y ticket medio"
           >
             <div class="exp-mob-hd">
               <p class="exp-stick-co">Movilitika · Yoigo</p>
@@ -3039,178 +3187,74 @@
       <!-- /exp-body -->
     </section>
 
-    <!-- ════════════ 3 VÍDEOS — STONE NICHES ════════════ -->
-    <section id="videos" class="vtabs" aria-label="Vídeos profesionales">
-      <!-- Header -->
-      <div class="vtabs-head">
-        <p class="vtabs-hd fu">En primera persona · Vídeos de estudio</p>
-        <h2 class="vtabs-title fu d1">
-          Mi forma de trabajar<br />en tres pilares: Personas, Tiendas y Datos.
+    <!-- ════════════ 3 VÍDEOS — SALA DE PROYECCIÓN ════════════ -->
+    <section id="videos" class="cinema" aria-label="Vídeos profesionales">
+      <div class="cinema-head">
+        <p class="cinema-eyebrow fu">En primera persona · Vídeos de estudio</p>
+        <h2 class="cinema-title vtabs-title fu d1">
+          Mi forma de trabajar<br />en tres pilares: Personas, Negocios y Resultados.
         </h2>
-        <p class="vtabs-subtitle fu d2">Pulsa una vitrina para explorar.</p>
       </div>
 
-      <!-- Stone niches row -->
-      <div class="vniches" role="list">
-        <!-- Niche 0 — Personas -->
-        <div
-          class="vniche fu"
-          role="listitem"
-          data-niche="0"
-          tabindex="0"
-          aria-label="Vídeo: Personas, gestión de equipos"
-        >
-          <div class="vniche-img-wrap">
-            <img
-              class="vniche-img"
-              src="portadas/personas.jpg"
-              alt=""
-              width="1200"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="vniche-play" aria-hidden="true"
-              ><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>Ver
-              vídeo</span
-            >
-          </div>
-          <div class="vniche-meta">
-            <strong>Personas</strong>
-            <span>Liderazgo Cercano</span>
+      <div class="cinema-stage">
+        <div class="cinema-screen-wrap">
+        <img class="cinema-glow is-on" data-i="0" src="portadas/personas.jpg" alt="" loading="lazy" decoding="async" />
+        <img class="cinema-glow" data-i="1" src="portadas/dia-a-dia.jpg" alt="" loading="lazy" decoding="async" />
+        <img class="cinema-glow" data-i="2" src="portadas/resultados.jpg" alt="" loading="lazy" decoding="async" />
+          <div class="cinema-screen" id="cinemaScreen">
+          <img class="cinema-cover is-on" data-i="0" src="portadas/personas.jpg" alt="" width="1600" height="900" decoding="async" />
+          <img class="cinema-cover" data-i="1" src="portadas/dia-a-dia.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async" />
+          <img class="cinema-cover" data-i="2" src="portadas/resultados.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async" />
+            <div class="cinema-media" id="cinemaMedia"></div>
+            <button class="cinema-play" id="cinemaPlay" type="button" aria-label="Reproducir vídeo: Personas">
+              <span class="cinema-play-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+              <span class="cinema-play-txt">Reproducir <b id="cinemaPlayTitle">Personas</b></span>
+            </button>
+            <span class="cinema-bar cinema-bar-t" aria-hidden="true"></span>
+            <span class="cinema-bar cinema-bar-b" aria-hidden="true"></span>
           </div>
         </div>
 
-        <!-- Niche 1 — Negocios -->
-        <div
-          class="vniche fu d1"
-          role="listitem"
-          data-niche="1"
-          tabindex="0"
-          aria-label="Vídeo: Negocios, estrategia comercial"
-        >
-          <div class="vniche-img-wrap">
-            <img
-              class="vniche-img"
-              src="portadas/dia-a-dia.jpg"
-              alt=""
-              width="1200"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="vniche-play" aria-hidden="true"
-              ><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>Ver
-              vídeo</span
-            >
-          </div>
-          <div class="vniche-meta">
-            <strong>El Día a Día</strong>
-            <span>En las Tiendas</span>
-          </div>
-        </div>
-
-        <!-- Niche 2 — Resultados -->
-        <div
-          class="vniche fu d2"
-          role="listitem"
-          data-niche="2"
-          tabindex="0"
-          aria-label="Vídeo: Resultados, métricas reales"
-        >
-          <div class="vniche-img-wrap">
-            <img
-              class="vniche-img"
-              src="portadas/resultados.jpg"
-              alt=""
-              width="1200"
-              height="900"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="vniche-play" aria-hidden="true"
-              ><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>Ver
-              vídeo</span
-            >
-          </div>
-          <div class="vniche-meta">
-            <strong>Resultados</strong>
-            <span>Cuenta de Resultados y KPIs</span>
-          </div>
-        </div>
+        <ol class="cinema-list" aria-label="Capítulos">
+          <li>
+            <button class="cinema-ch is-active" type="button" data-i="0" data-id="BSG8bCsBlqo" data-title="Personas" aria-pressed="true">
+              <span class="ch-num">01</span>
+              <span class="ch-txt">
+                <strong>Personas</strong>
+                <span class="ch-sub">Liderazgo cercano</span>
+                <span class="ch-desc">Cómo he gestionado equipos de hasta 35 profesionales basándome en la escucha, la confianza y el acompañamiento individual para recuperar la motivación y elevar los resultados.</span>
+              </span>
+              <span class="ch-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+              <span class="ch-progress" aria-hidden="true"><i></i></span>
+            </button>
+          </li>
+          <li>
+            <button class="cinema-ch" type="button" data-i="1" data-id="pFTeQRQL4Z8" data-title="Negocios" aria-pressed="false">
+              <span class="ch-num">02</span>
+              <span class="ch-txt">
+                <strong>Negocios</strong>
+                <span class="ch-sub">El día a día en las tiendas</span>
+                <span class="ch-desc">Cómo se coordina sobre el terreno el trabajo de 10 puntos de venta: organización de encargados, excelencia en la atención, venta consultiva y cuidado del visual merchandising.</span>
+              </span>
+              <span class="ch-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+              <span class="ch-progress" aria-hidden="true"><i></i></span>
+            </button>
+          </li>
+          <li>
+            <button class="cinema-ch" type="button" data-i="2" data-id="3wuIIeFZtQw" data-title="Resultados" aria-pressed="false">
+              <span class="ch-num">03</span>
+              <span class="ch-txt">
+                <strong>Resultados</strong>
+                <span class="ch-sub">Cuenta de resultados y KPIs</span>
+                <span class="ch-desc">Cómo analizo los indicadores de cada tienda (conversión, ticket medio, venta cruzada y control de mermas) para corregir desviaciones a tiempo y sostener más de un 90&nbsp;% de cumplimiento.</span>
+              </span>
+              <span class="ch-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+              <span class="ch-progress" aria-hidden="true"><i></i></span>
+            </button>
+          </li>
+        </ol>
       </div>
-      <!-- /vniches -->
-
-      <p class="vniches-hint">Pulsa para explorar. ESC para cerrar.</p>
     </section>
-
-    <!-- ════════════ DETAIL OVERLAY (full-screen niche expansion) ════════════ -->
-    <div
-      id="vdetail"
-      class="vdetail"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Detalle de vídeo"
-    >
-      <button class="vdetail-close" id="vdetailClose" aria-label="Cerrar">
-        ✕
-      </button>
-
-      <!-- Left: info -->
-      <div class="vdl">
-        <p class="vdl-num" id="vdl-num">01 / 03</p>
-        <h2 class="vdl-title" id="vdl-title">Personas</h2>
-        <p class="vdl-desc" id="vdl-desc">
-          Cómo lidero, motivo y desarrollo equipos de alto rendimiento en
-          entornos de alta rotación y presión comercial.
-        </p>
-
-        <!-- Play button — visible when URL set, hidden otherwise -->
-        <button
-          class="vdl-play"
-          id="vdl-play"
-          style="display: none"
-          aria-label="Reproducir vídeo"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          Reproducir vídeo
-        </button>
-        <p class="vdl-soon" id="vdl-soon">
-          Vídeo en producción, disponible próximamente
-        </p>
-
-        <button
-          class="vdl-back"
-          id="vdl-back"
-          aria-label="Volver a las vitrinas"
-        >
-          <svg viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Volver
-        </button>
-      </div>
-
-      <!-- Right: enlarged niche display -->
-      <div class="vdr">
-        <div class="vdr-img-wrap" id="vdr-img-wrap">
-          <div class="vdr-ph" id="vdr-ph" aria-hidden="true">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /vdetail -->
 
     <!-- ════════════ COMPETENCIAS ════════════ -->
     <section
@@ -3524,7 +3568,7 @@
             <p>
               Me defino como un líder cercano, de terreno y exigente con los
               resultados. Durante los 9 años en los que he dirigido 10 tiendas
-              en Alicante y Albacete nunca he entendido este trabajo desde un
+              nunca he entendido este trabajo desde un
               despacho: me gusta estar en los puntos de venta, escuchar a mi
               gente, darles confianza y trabajar codo con codo para que los
               objetivos salgan adelante.
@@ -3562,7 +3606,7 @@
           <div class="faq-a">
             <p>
               Tras cerrar una etapa muy enriquecedora de 9 años como Área
-              Manager dirigiendo las tiendas de Movistar en Alicante y Albacete,
+              Manager dirigiendo las tiendas de Movistar,
               me encuentro en búsqueda activa y con disponibilidad inmediata.
               Busco incorporarme a una empresa donde pueda aportar mis 20 años
               de experiencia en retail, mi manejo de la cuenta de resultados y
@@ -3583,7 +3627,7 @@
       <p class="fu d2">
         Si buscas un Área Manager o responsable comercial que combine cercanía
         humana en el punto de venta con rigor en la cuenta de resultados, estaré
-        encantado de conversar contigo.
+        encantado de hablar contigo.
       </p>
       <div class="chips fu d3">
         <a href="tel:+34624061965" class="chip">
@@ -3641,13 +3685,10 @@
         </a>
         <span class="chip" style="pointer-events: none; opacity: 0.7">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-              stroke="currentColor"
-              stroke-width="1.4"
-            />
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4" />
+            <path d="M8 12.5l2.7 2.7L16.5 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          Alicante / Albacete · Disponibilidad inmediata
+          Disponibilidad inmediata
         </span>
       </div>
       <!-- QR code -->
@@ -3792,17 +3833,26 @@
           }
         }
 
-        document
-          .getElementById("vpFrameBtn")
-          ?.addEventListener("click", () => openModal());
-        document
-          .getElementById("vpFrameBtn")
-          ?.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openModal();
-            }
-          });
+        /* Presentación: el vídeo arranca dentro de su propio marco */
+        const vpFrame = document.getElementById("vpFrameBtn");
+        function playPresentation() {
+          if (!vpFrame || vpFrame.classList.contains("is-playing")) return;
+          vpFrame.classList.add("is-playing");
+          vpFrame.removeAttribute("role");
+          vpFrame.removeAttribute("tabindex");
+          vpFrame.insertAdjacentHTML(
+            "beforeend",
+            `<iframe class="vp-iframe" src="https://www.youtube-nocookie.com/embed/${PRESENTATION_ID}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+              title="Vídeo de presentación" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`,
+          );
+        }
+        vpFrame?.addEventListener("click", playPresentation);
+        vpFrame?.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            playPresentation();
+          }
+        });
         modalClose?.addEventListener("click", closeModal);
         modal?.addEventListener("click", (e) => {
           if (e.target === modal) closeModal();
@@ -3882,166 +3932,86 @@
             .forEach((el) => io.observe(el));
         })();
 
-        /* ── STONE NICHES — full-screen bloom ────────── */
+        /* ── SALA DE PROYECCIÓN: un clic y el vídeo suena aquí mismo ── */
         (function () {
-          /* ── Data ─────────────────────────────── */
-          const DATA = [
-            {
-              num: "01",
-              title: "Personas y Liderazgo Cercano",
-              sub: "Liderazgo Cercano",
-              desc: "Cómo he gestionado equipos de hasta 35 profesionales basándome en la escucha, la confianza y el acompañamiento individual para recuperar la motivación y elevar los resultados.",
-              url: "BSG8bCsBlqo",
-              cover: "portadas/personas.jpg",
-            },
-            {
-              num: "02",
-              title: "El Día a Día en las Tiendas",
-              sub: "Tiendas y Operaciones",
-              desc: "Cómo se coordina sobre el terreno el trabajo de 10 puntos de venta: organización de encargados, excelencia en la atención, venta consultiva y cuidado del visual merchandising.",
-              url: "pFTeQRQL4Z8",
-              cover: "portadas/dia-a-dia.jpg",
-            },
-            {
-              num: "03",
-              title: "Cuenta de Resultados y KPIs",
-              sub: "Datos y Resultados",
-              desc: "Cómo analizo los indicadores de cada tienda (conversión, ticket medio, venta cruzada y control de mermas) para corregir desviaciones a tiempo y sostener más de un 90% de cumplimiento.",
-              url: "3wuIIeFZtQw",
-              cover: "portadas/resultados.jpg",
-            },
-          ];
+          const screen = document.getElementById("cinemaScreen");
+          if (!screen) return;
+          const media = document.getElementById("cinemaMedia");
+          const playBtn = document.getElementById("cinemaPlay");
+          const playTitle = document.getElementById("cinemaPlayTitle");
+          const chs = Array.from(document.querySelectorAll(".cinema-ch"));
+          const covers = Array.from(document.querySelectorAll(".cinema-cover"));
+          const glows = Array.from(document.querySelectorAll(".cinema-glow"));
+          const section = screen.closest(".cinema");
+          const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const CYCLE = 7000;
+          let active = 0, playing = false, timer = null, visible = false, userTouched = false;
 
-          /* ── SVG icons per niche for detail panel ─ */
-          const DET_ICONS = [
-            /* Personas */
-            '<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>',
-            /* Negocios */
-            '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h5M8 16h3"/>',
-            /* Resultados */
-            '<polyline points="4 17 9 12 13 15 19 8"/><path d="M20 8h-4v4"/>',
-          ];
+          const embed = (id, title) =>
+            `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+              title="${title}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
 
-          const niches = document.querySelectorAll(".vniche");
-          const detail = document.getElementById("vdetail");
-          const btnClose = document.getElementById("vdetailClose");
-          const btnBack = document.getElementById("vdl-back");
-          const elNum = document.getElementById("vdl-num");
-          const elTitle = document.getElementById("vdl-title");
-          const elDesc = document.getElementById("vdl-desc");
-          const elPlay = document.getElementById("vdl-play");
-          const elSoon = document.getElementById("vdl-soon");
-          const drPh = document.getElementById("vdr-ph");
-          let active = -1;
-
-          /* CSS-only cursor change on hover — no DOM element to move */
-
-          /* ── Open detail with bloom from click position ── */
-          function openDetail(idx, clickX, clickY) {
-            if (!detail) return;
-            active = idx;
-            const d = DATA[idx];
-
-            /* Compute origin % for clip-path */
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            const ox = Math.round((clickX / vw) * 100);
-            const oy = Math.round((clickY / vh) * 100);
-            detail.style.setProperty("--vd-ox", ox + "%");
-            detail.style.setProperty("--vd-oy", oy + "%");
-
-            /* Populate left panel */
-            if (elNum) elNum.textContent = d.num + " / 03";
-            if (elTitle) elTitle.textContent = d.title;
-            if (elDesc) elDesc.textContent = d.desc;
-            if (elPlay) elPlay.style.display = d.url ? "inline-flex" : "none";
-            if (elSoon) elSoon.style.display = d.url ? "none" : "block";
-
-            /* Populate right panel with matching icon */
-            if (drPh) {
-              if (d.url && d.cover) {
-                drPh.classList.add("has-cover");
-                drPh.removeAttribute("aria-hidden");
-                drPh.setAttribute("role", "button");
-                drPh.setAttribute("tabindex", "0");
-                drPh.setAttribute("aria-label", "Reproducir vídeo: " + d.title);
-                drPh.innerHTML = `<img src="${d.cover}" alt="" /><span class="vdr-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
-              } else {
-                drPh.classList.remove("has-cover");
-                drPh.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
-            width="44" height="44" style="opacity:.35">${DET_ICONS[idx]}</svg>`;
-              }
-            }
-
-            /* Open: force reflow so transition fires */
-            detail.style.display = "grid";
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                detail.classList.add("open");
-              });
+          function select(i) {
+            active = i;
+            chs.forEach((c, k) => {
+              c.classList.toggle("is-active", k === i);
+              c.setAttribute("aria-pressed", k === i ? "true" : "false");
             });
-            document.body.style.overflowY = "hidden";
-            window.__lenis?.stop();
-
-            /* Play button wires up video modal */
-            if (d.url) {
-              const play = () => openModal(d.url, d.title);
-              if (elPlay) elPlay.onclick = play;
-              if (drPh) {
-                drPh.onclick = play;
-                drPh.onkeydown = (e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    play();
-                  }
-                };
-              }
-            }
+            covers.forEach((c, k) => c.classList.toggle("is-on", k === i));
+            glows.forEach((c, k) => c.classList.toggle("is-on", k === i));
+            const t = chs[i].dataset.title;
+            if (playTitle) playTitle.textContent = t;
+            playBtn?.setAttribute("aria-label", "Reproducir vídeo: " + t);
+            restartCycle();
           }
 
-          /* ── Close detail ── */
-          function closeDetail() {
-            if (!detail) return;
-            detail.classList.remove("open");
-            document.body.style.overflowY = "";
-            window.__lenis?.start();
-            /* Hide after transition */
-            setTimeout(() => {
-              detail.style.display = "none";
-            }, 680);
-            active = -1;
-            if (elPlay) elPlay.onclick = null;
-            if (drPh) drPh.onclick = drPh.onkeydown = null;
+          function play() {
+            const c = chs[active];
+            playing = true;
+            stopCycle();
+            media.innerHTML = embed(c.dataset.id, c.dataset.title);
+            screen.classList.add("is-playing");
+            section.classList.add("is-playing");
           }
 
-          /* ── Wire niche clicks ── */
-          niches.forEach((n, i) => {
-            n.addEventListener("click", (e) => {
-              openDetail(i, e.clientX, e.clientY);
-            });
-            n.addEventListener("keydown", (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                const r = n.getBoundingClientRect();
-                openDetail(i, r.left + r.width / 2, r.top + r.height / 2);
-              }
-            });
+          /* Escaparate automático: pasa de capítulo solo si nadie ha tocado nada */
+          function stopCycle() {
+            clearTimeout(timer);
+            timer = null;
+            section.classList.remove("is-cycling");
+          }
+          function restartCycle() {
+            stopCycle();
+            if (calm || playing || userTouched || !visible) return;
+            void section.offsetWidth; /* reinicia la barra de progreso */
+            section.classList.add("is-cycling");
+            timer = setTimeout(() => select((active + 1) % chs.length), CYCLE);
+          }
+
+          chs.forEach((c, i) =>
+            c.addEventListener("click", () => {
+              userTouched = true;
+              if (playing || i === active) {
+                select(i);
+                play();
+              } else select(i);
+            }),
+          );
+          playBtn?.addEventListener("click", () => {
+            userTouched = true;
+            play();
           });
 
-          /* ── Close handlers ── */
-          if (btnClose) btnClose.addEventListener("click", closeDetail);
-          if (btnBack) btnBack.addEventListener("click", closeDetail);
-          document.addEventListener("keydown", (e) => {
-            if (
-              e.key === "Escape" &&
-              detail &&
-              detail.classList.contains("open")
-            )
-              closeDetail();
-          });
-
-          /* Initially hidden */
-          if (detail) detail.style.display = "none";
+          /* Entra en escena: se abren las bandas de cine y arranca el escaparate */
+          new IntersectionObserver(
+            (entries) =>
+              entries.forEach((en) => {
+                visible = en.isIntersecting;
+                if (visible) section.classList.add("is-in");
+                restartCycle();
+              }),
+            { threshold: 0.35 },
+          ).observe(screen);
         })();
 
         /* ── STICKY EXPERIENCE SECTION ───────────────── */
@@ -4063,10 +4033,22 @@
           _expActiveIdx = idx;
           if (_expAnimTimer) clearTimeout(_expAnimTimer); // cancela fade anterior
           expInfo.classList.add("changing");
+          document.getElementById("expPanel")?.classList.add("changing");
           _expAnimTimer = setTimeout(() => {
             if (expStickCo) expStickCo.textContent = job.dataset.co;
             if (expStickRl) expStickRl.textContent = job.dataset.role;
             if (expStickPd) expStickPd.textContent = job.dataset.period;
+            const [yFrom, yTo] = (job.dataset.years || "").split("|");
+            const setTxt = (id, t) => { const el = document.getElementById(id); if (el && t) el.textContent = t; };
+            setTxt("expPanelFrom", yFrom);
+            setTxt("expPanelTo", yTo);
+            setTxt("expPanelBrand", job.dataset.brand);
+            const chipsEl = document.getElementById("expPanelChips");
+            if (chipsEl && job.dataset.chips)
+              chipsEl.innerHTML = job.dataset.chips.split("|").map((c) => `<li>${c}</li>`).join("");
+            document.querySelectorAll(".exp-panel-track span").forEach((s) =>
+              s.classList.toggle("on", +s.dataset.job === idx));
+            document.getElementById("expPanel")?.classList.remove("changing");
             expDots.forEach((d, i) => d.classList.toggle("active", i === idx));
             expInfo.classList.remove("changing");
             _expAnimTimer = null;
@@ -4501,7 +4483,7 @@
         const expBody = $(".exp-body");
         if (expBody) {
           gsap.fromTo(
-            ".exp-photo",
+            ".exp-panel-grid",
             { scale: 1.1 },
             {
               scale: 1,
@@ -4563,90 +4545,18 @@
               }),
           });
         };
-        rise(".vniche");
+        rise(".cinema-ch", { y: 40 });
         rise(".form-card");
         rise(".faq-item", { y: 30 });
         rise(".chip", { y: 30 });
         rise(".qr-wrap", { y: 40 });
         rise(".hist-close > :not(.hist-close-bar)", { y: 40 });
 
-        /* Vitrinas: la portada se descubre, la foto se asienta y el texto entra */
-        $$(".vniche").forEach((card, i) => {
-          const wrap = $(".vniche-img-wrap", card);
-          const img = $(".vniche-img", card);
-          const meta = $$(".vniche-meta > *", card);
-          if (!wrap || !img) return;
-          const t = gsap.timeline({
-            scrollTrigger: { trigger: card, start: "top 88%", once: true },
-            delay: i * 0.12,
-            defaults: { ease: EASE },
-          });
-          t.from(wrap, {
-            clipPath: "inset(100% 0% 0% 0% round 8px)",
-            duration: 1.4,
-            ease: "power4.inOut",
-          })
-            .fromTo(img, { scale: 1.4 }, { scale: 1.12, duration: 1.8 }, 0.15)
-            .from(meta, { y: 24, opacity: 0, duration: 1, stagger: 0.08 }, 0.6);
-
-          /* Parallax suave de la foto dentro del marco */
-          gsap.fromTo(
-            img,
-            { yPercent: -4 },
-            {
-              yPercent: 4,
-              ease: "none",
-              immediateRender: false,
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-
-          /* Ratón: la tarjeta se inclina y la foto se acerca (solo con ratón) */
-          if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-          gsap.set(card, { transformPerspective: 1000 });
-          card.addEventListener("mousemove", (e) => {
-            const r = card.getBoundingClientRect();
-            const px = (e.clientX - r.left) / r.width - 0.5;
-            const py = (e.clientY - r.top) / r.height - 0.5;
-            gsap.to(card, {
-              rotationY: px * 6,
-              rotationX: -py * 6,
-              y: -6,
-              duration: 0.6,
-              ease: "power3.out",
-              overwrite: "auto",
-            });
-          });
-          card.addEventListener("mouseenter", () =>
-            gsap.to(img, {
-              scale: 1.2,
-              duration: 0.9,
-              ease: "power3.out",
-              overwrite: "auto",
-            }),
-          );
-          card.addEventListener("mouseleave", () => {
-            gsap.to(card, {
-              rotationY: 0,
-              rotationX: 0,
-              y: 0,
-              duration: 0.9,
-              ease: "elastic.out(1, 0.6)",
-              overwrite: "auto",
-            });
-            gsap.to(img, {
-              scale: 1.12,
-              duration: 0.9,
-              ease: "power3.out",
-              overwrite: "auto",
-            });
-          });
-        });
+        /* Sala de proyección: la pantalla se acerca al entrar */
+        gsap.fromTo(".cinema-screen-wrap",
+          { scale: 0.9, y: 60 },
+          { scale: 1, y: 0, ease: "none",
+            scrollTrigger: { trigger: ".cinema", start: "top bottom", end: "top 25%", scrub: 1 } });
 
         /* ── Competencias: filete que se dibuja y fila que entra ── */
         $$(".comp-item").forEach((row) => {
